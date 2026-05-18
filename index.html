@@ -569,8 +569,15 @@
     font-size: 11px;
     color: var(--ink-2);
     background: var(--line-soft);
-    transition: transform .1s;
+    transition: transform .1s, box-shadow .15s;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--font-display);
   }
+  .heat-cell:active { transform: scale(0.9); }
+  .heat-cell.clickable:hover { box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3); }
+  .heat-cell:not(.clickable) { cursor: default; opacity: 0.85; }
   .heat-cell.heat-1 { background: #FFD9E5; color: #B83F66; }
   .heat-cell.heat-2 { background: #FFA5BD; color: #fff; }
   .heat-cell.heat-3 { background: linear-gradient(135deg, #FF477E, #8B5CF6); color: #fff; }
@@ -589,20 +596,85 @@
   .heat-cell.mini { width: 12px; height: 14px; aspect-ratio: auto; padding: 0; }
   .heat-cell.mini .heat-day { display: none; }
 
-  /* daily list */
+  /* daily list (details) */
   .daily-list { margin-bottom: 22px; }
   .daily-item {
-    display: flex;
-    gap: 14px;
     background: var(--surface);
     border: 2px solid var(--line);
     border-radius: var(--radius);
-    padding: 14px;
     margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow .3s;
   }
   .daily-item.is-today {
     border-color: var(--pink);
     background: linear-gradient(135deg, var(--surface) 0%, var(--pink-bg) 100%);
+  }
+  .daily-item.highlight-pulse {
+    box-shadow: 0 0 0 4px rgba(255, 71, 126, 0.3);
+  }
+  .daily-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    user-select: none;
+  }
+  .daily-summary::-webkit-details-marker { display: none; }
+  .daily-summary::after {
+    content: '▾';
+    font-size: 12px;
+    color: var(--muted);
+    transition: transform .25s;
+    margin-left: auto;
+    padding-left: 8px;
+  }
+  .daily-item[open] .daily-summary::after { transform: rotate(180deg); }
+  .daily-detail-body {
+    padding: 4px 14px 14px;
+    border-top: 1px dashed var(--line);
+    margin-top: 2px;
+  }
+  .daily-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+  .daily-detail-row + .daily-detail-row {
+    border-top: 1px solid var(--line-soft);
+  }
+  .detail-time {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 42px;
+  }
+  .detail-subj {
+    font-weight: 700;
+    min-width: 70px;
+  }
+  .detail-score {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .detail-dur {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .detail-tag {
+    font-size: 10px;
+    color: var(--purple);
+    background: var(--purple-soft);
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 700;
   }
   .daily-date {
     text-align: center;
@@ -2308,6 +2380,23 @@ function parseDateKey(s) {
   const parts = s.split('-').map(Number);
   return new Date(parts[0], parts[1] - 1, parts[2]);
 }
+function jumpToDailyDetail(dateKey) {
+  const target = document.getElementById('daily-' + dateKey);
+  if (!target) return;
+  // すべての details を閉じてから対象を開く
+  document.querySelectorAll('#daily-list details').forEach(d => {
+    if (d.id !== 'daily-' + dateKey) d.removeAttribute('open');
+  });
+  target.setAttribute('open', '');
+  // スクロール
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // 強調アニメーション
+    target.classList.add('highlight-pulse');
+    setTimeout(() => target.classList.remove('highlight-pulse'), 1500);
+  }, 100);
+}
+
 function groupHistoryByDate(historyArr) {
   const days = {};
   for (const h of historyArr) {
@@ -3100,6 +3189,7 @@ function renderReportScreen() {
 
   // ===== 1. 14日間のヒートストリップ =====
   root.appendChild(el('div', { class: 'section-label' }, '🗓 ここ14日間', el('div', { class: 'deco' })));
+  root.appendChild(el('div', { class: 'coverage-note' }, '日付のマスをタップすると、その日の学習履歴にジャンプできます。'));
   const stripCard = el('div', { class: 'heat-card' });
   const stripRow = el('div', { class: 'heat-strip' });
   for (let i = 13; i >= 0; i--) {
@@ -3108,16 +3198,18 @@ function renderReportScreen() {
     const key = formatDateKey(d);
     const dayHist = history.filter(h => h.date === key);
     const total = dayHist.reduce((s, h) => s + h.total, 0);
-    // 強度（0: 空、1-10: 薄、11-30: 中、31+: 濃）
     let level = 0;
     if (total > 30) level = 3;
     else if (total > 10) level = 2;
     else if (total > 0) level = 1;
     const isToday = i === 0;
     const dom = d.getDate();
-    const cell = el('div', {
-      class: 'heat-cell heat-' + level + (isToday ? ' is-today' : ''),
-      title: key + ' / ' + total + '問'
+    const hasData = total > 0;
+    const cell = el('button', {
+      class: 'heat-cell heat-' + level + (isToday ? ' is-today' : '') + (hasData ? ' clickable' : ''),
+      title: key + ' / ' + total + '問' + (hasData ? '（タップで詳細）' : '（学習なし）'),
+      type: 'button',
+      onclick: hasData ? () => jumpToDailyDetail(key) : () => showToast('この日はまだ学習記録がありません')
     },
       el('div', { class: 'heat-day' }, String(dom))
     );
@@ -3136,12 +3228,13 @@ function renderReportScreen() {
 
   // ===== 2. 日別の学習履歴 =====
   root.appendChild(el('div', { class: 'section-label' }, '📅 日別の学習履歴', el('div', { class: 'deco' })));
+  root.appendChild(el('div', { class: 'coverage-note' }, 'カードをタップすると、その日に解いたセッションの詳細が開きます。'));
   if (history.length === 0) {
     root.appendChild(el('div', { class: 'empty-state' }, 'まだ学習記録がありません'));
   } else {
     const daily = groupHistoryByDate(history);
-    const list = el('div', { class: 'daily-list' });
-    daily.slice(0, 14).forEach(({ date, sessions }) => {
+    const list = el('div', { class: 'daily-list', id: 'daily-list' });
+    daily.slice(0, 30).forEach(({ date, sessions }) => {
       const total = sessions.reduce((s, h) => s + h.total, 0);
       const correct = sessions.reduce((s, h) => s + h.correct, 0);
       const pct = Math.round(100 * correct / total);
@@ -3162,7 +3255,28 @@ function renderReportScreen() {
         ));
       });
 
-      list.appendChild(el('div', { class: 'daily-item' + (isToday ? ' is-today' : '') },
+      // 詳細部分：その日の各セッションを時刻順に列挙
+      const detailBody = el('div', { class: 'daily-detail-body' });
+      const sortedSessions = sessions.slice().sort((a, b) => (a.ts || 0) - (b.ts || 0));
+      sortedSessions.forEach((s, idx) => {
+        const subj = SUBJECTS.find(x => x.id === s.subject);
+        if (!subj) return;
+        const sPct = Math.round(100 * s.correct / s.total);
+        const sTime = new Date(s.ts || 0);
+        const timeStr = String(sTime.getHours()).padStart(2, '0') + ':' + String(sTime.getMinutes()).padStart(2, '0');
+        const durMin = Math.floor((s.durationSec || 0) / 60);
+        const durSec = (s.durationSec || 0) % 60;
+        const durStr = (durMin > 0 ? durMin + '分' : '') + durSec + '秒';
+        detailBody.appendChild(el('div', { class: 'daily-detail-row' },
+          el('span', { class: 'detail-time' }, timeStr),
+          el('span', { class: 'detail-subj', style: 'color:' + subj.color }, subj.emoji + ' ' + subj.ja),
+          el('span', { class: 'detail-score' }, s.correct + '/' + s.total + ' (' + sPct + '%)'),
+          el('span', { class: 'detail-dur' }, '⏱ ' + durStr),
+          s.reviewMode ? el('span', { class: 'detail-tag' }, '復習') : null
+        ));
+      });
+
+      const summary = el('summary', { class: 'daily-summary' },
         el('div', { class: 'daily-date' },
           el('div', { class: 'daily-day' }, dateLabel),
           el('div', { class: 'daily-dow' }, '(' + dowLabel + ')')
@@ -3171,7 +3285,14 @@ function renderReportScreen() {
           el('div', { class: 'daily-total' }, total + '問・' + pct + '%'),
           chips
         )
-      ));
+      );
+
+      const dailyItem = el('details', {
+        class: 'daily-item' + (isToday ? ' is-today' : ''),
+        id: 'daily-' + date,
+        open: isToday  // 当日のみ最初から開いておく
+      }, summary, detailBody);
+      list.appendChild(dailyItem);
     });
     root.appendChild(list);
   }

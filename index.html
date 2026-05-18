@@ -523,6 +523,418 @@
   }
   .data-link:active { background: var(--surface-2); }
 
+  /* レポート閲覧ボタン */
+  .view-report-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.32);
+    transition: transform .15s cubic-bezier(.3,1.4,.5,1);
+    margin-top: 14px;
+  }
+  .view-report-btn:active { transform: scale(0.96); }
+
+  /* heat strip (14days) */
+  .heat-card {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 22px;
+  }
+  .heat-strip {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 4px;
+  }
+  .heat-cell {
+    aspect-ratio: 1 / 1.4;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink-2);
+    background: var(--line-soft);
+    transition: transform .1s;
+  }
+  .heat-cell.heat-1 { background: #FFD9E5; color: #B83F66; }
+  .heat-cell.heat-2 { background: #FFA5BD; color: #fff; }
+  .heat-cell.heat-3 { background: linear-gradient(135deg, #FF477E, #8B5CF6); color: #fff; }
+  .heat-cell.is-today {
+    box-shadow: 0 0 0 2px var(--ink);
+  }
+  .heat-day { line-height: 1; }
+  .heat-legend {
+    display: flex; align-items: center; gap: 6px;
+    justify-content: flex-end;
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .heat-cell.mini { width: 12px; height: 14px; aspect-ratio: auto; padding: 0; }
+  .heat-cell.mini .heat-day { display: none; }
+
+  /* daily list */
+  .daily-list { margin-bottom: 22px; }
+  .daily-item {
+    display: flex;
+    gap: 14px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .daily-item.is-today {
+    border-color: var(--pink);
+    background: linear-gradient(135deg, var(--surface) 0%, var(--pink-bg) 100%);
+  }
+  .daily-date {
+    text-align: center;
+    min-width: 64px;
+    border-right: 2px dashed var(--line);
+    padding-right: 14px;
+  }
+  .daily-day {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .daily-dow {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .daily-body { flex: 1; min-width: 0; }
+  .daily-total {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .daily-sessions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .session-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1.5px solid;
+  }
+
+  /* coverage card */
+  .coverage-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding: 0 4px;
+    font-weight: 500;
+  }
+  .cov-card {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .cov-card summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+  }
+  .cov-card summary::-webkit-details-marker { display: none; }
+  .cov-card summary::after {
+    content: '▾';
+    font-size: 11px;
+    color: var(--muted);
+    transition: transform .2s;
+    margin-left: 4px;
+  }
+  .cov-card[open] summary::after { transform: rotate(180deg); }
+  .cov-emoji { font-size: 20px; }
+  .cov-subject {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    min-width: 38px;
+  }
+  .cov-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--line-soft);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .cov-fill {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    transition: width .5s cubic-bezier(.4, .8, .4, 1);
+  }
+  .cov-pct {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+    min-width: 42px;
+    text-align: right;
+  }
+  .cov-body {
+    padding: 4px 14px 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .cov-summary {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 10px 0 8px;
+    font-weight: 600;
+  }
+  .cov-topic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 12px;
+  }
+  .cov-topic-row.needs-work .cov-topic-name {
+    color: var(--pink);
+    font-weight: 700;
+  }
+  .cov-topic-row.needs-work .cov-topic-name::after {
+    content: ' ⚠';
+    font-size: 10px;
+  }
+  .cov-topic-name {
+    min-width: 100px;
+    max-width: 130px;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 11px;
+  }
+  .cov-topic-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--line-soft);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .cov-topic-fill {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+  }
+  .cov-topic-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--ink-2);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* topic breakdown */
+  .topic-card {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px 12px;
+    margin-bottom: 14px;
+  }
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .topic-emoji { font-size: 20px; }
+  .topic-subject {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    flex: 1;
+  }
+  .topic-count {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface-2);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .topic-list { display: flex; flex-direction: column; gap: 4px; }
+  .topic-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .topic-name {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .topic-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink-2);
+    font-size: 12px;
+  }
+  .topic-review-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform .12s;
+  }
+  .topic-review-btn:active { transform: scale(0.96); }
+
+  /* session list */
+  .session-list {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 4px 14px;
+    margin-bottom: 22px;
+  }
+  .session-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    font-size: 13px;
+  }
+  .session-item + .session-item { border-top: 1px dashed var(--line); }
+  .session-date {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 38px;
+    font-size: 12px;
+  }
+  .session-subj {
+    font-weight: 700;
+    flex: 1;
+  }
+  .session-score {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .session-tag {
+    font-size: 10px;
+    color: var(--purple);
+    background: var(--purple-soft);
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  /* empty state */
+  .empty-state {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 14px;
+    background: var(--surface);
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 22px;
+  }
+
+  /* report button (parent share) */
+  .report-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #FFB347 0%, #FF8A35 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(255, 138, 53, 0.32);
+    transition: transform .15s cubic-bezier(.3,1.4,.5,1);
+    margin-top: 14px;
+  }
+  .report-btn:active { transform: scale(0.96); }
+  .report-btn-emoji { font-size: 18px; }
+
+  /* update notice */
+  .update-notice {
+    position: fixed;
+    left: 50%; bottom: 24px;
+    transform: translate(-50%, 100px);
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: #fff;
+    padding: 12px 18px 12px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 12px 32px rgba(139,92,246,0.4);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform .35s cubic-bezier(.3,1.3,.5,1);
+    max-width: 92%;
+  }
+  .update-notice.visible { transform: translate(-50%, 0); }
+  .update-notice button {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .update-notice button:active { background: rgba(255,255,255,0.4); }
+
   .footnote {
     text-align: center;
     margin-top: 24px;
@@ -621,6 +1033,12 @@
     font-size: 14px;
     color: var(--muted);
   }
+  .q-difficulty {
+    color: var(--sparkle);
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-left: 2px;
+  }
   .q-topic {
     font-family: var(--font-sans);
     font-weight: 600;
@@ -644,6 +1062,36 @@
     min-width: 60px;
     border-bottom: 3px dotted var(--pink);
     text-align: center;
+  }
+
+  /* イラスト問題のSVG表示エリア */
+  .q-illustration {
+    margin: 14px -4px 4px;
+    padding: 12px;
+    background: linear-gradient(135deg, #FFFDF5 0%, #F5FAFF 100%);
+    border: 2px solid var(--line);
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+  .q-illustration svg {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .q-illustration .label-pin {
+    font-family: var(--font-display);
+    font-weight: 700;
+    fill: var(--pink);
+  }
+  .q-illustration .label-line {
+    stroke: var(--pink);
+    stroke-width: 1.5;
+    fill: none;
+  }
+  .q-illustration .label-dot {
+    fill: var(--pink);
   }
 
   /* options */
@@ -1182,6 +1630,7 @@
   <main id="screen-quiz" class="screen hidden"></main>
   <main id="screen-result" class="screen hidden"></main>
   <main id="screen-data" class="screen hidden"></main>
+  <main id="screen-report" class="screen hidden"></main>
 </div>
 
 <script>
@@ -1189,198 +1638,424 @@
 const QUESTIONS = {
   english: [
     // 数字1-20（教科書 p.14）
-    { t:'数字', type:'i', q:'「one」を数字で書きなさい。', a:['1','１'], hint:'1 → one。' },
-    { t:'数字', type:'i', q:'「twelve」を数字で書きなさい。', a:['12','１２'], hint:'12 → twelve。' },
-    { t:'数字', type:'i', q:'「twenty」を数字で書きなさい。', a:['20','２０'], hint:'20 → twenty。' },
-    { t:'数字', type:'i', q:'「15」を英語で書きなさい。', a:['fifteen','Fifteen'], hint:'fifty (50) とスペルを混同しないように。' },
-    { t:'数字', type:'i', q:'「13」を英語で書きなさい。', a:['thirteen','Thirteen'], hint:'thirty (30) と区別。' },
-    { t:'数字', type:'c', q:'「18」を英語で書くと？', opts:['eightteen','eighteen','eighten','eightyteen'], a:'eighteen', hint:'eight + teen = eighteen。t は1つだけ。' },
-    { t:'数字', type:'c', q:'「8」を英語で書くと？', opts:['eight','eaght','eihgt','eithg'], a:'eight', hint:'発音「エイト」。スペル要注意。' },
-    { t:'数字', type:'i', q:'「11」を英語で書きなさい。', a:['eleven','Eleven'], hint:'11 → eleven。' },
+    { t:'数字', d:1, type:'i', q:'「one」を数字で書きなさい。', a:['1','１'], hint:'1 → one。' },
+    { t:'数字', d:1, type:'i', q:'「twelve」を数字で書きなさい。', a:['12','１２'], hint:'12 → twelve。' },
+    { t:'数字', d:1, type:'i', q:'「twenty」を数字で書きなさい。', a:['20','２０'], hint:'20 → twenty。' },
+    { t:'数字', d:1, type:'i', q:'「15」を英語で書きなさい。', a:['fifteen','Fifteen'], hint:'fifty (50) とスペルを混同しないように。' },
+    { t:'数字', d:1, type:'i', q:'「13」を英語で書きなさい。', a:['thirteen','Thirteen'], hint:'thirty (30) と区別。' },
+    { t:'数字', d:1, type:'c', q:'「18」を英語で書くと？', opts:['eightteen','eighteen','eighten','eightyteen'], a:'eighteen', hint:'eight + teen = eighteen。t は1つだけ。' },
+    { t:'数字', d:1, type:'c', q:'「8」を英語で書くと？', opts:['eight','eaght','eihgt','eithg'], a:'eight', hint:'発音「エイト」。スペル要注意。' },
+    { t:'数字', d:1, type:'i', q:'「11」を英語で書きなさい。', a:['eleven','Eleven'], hint:'11 → eleven。' },
     // 家族（教科書 p.43 Check ①）
-    { t:'家族', type:'i', q:'「母」を英語で書きなさい。', a:['mother','Mother'], hint:'mom も可。' },
-    { t:'家族', type:'i', q:'「父」を英語で書きなさい。', a:['father','Father'], hint:'dad も可。' },
-    { t:'家族', type:'i', q:'「兄・弟」を英語で書きなさい。', a:['brother','Brother'], hint:'英語では年上・年下を区別しない。' },
-    { t:'家族', type:'i', q:'「姉・妹」を英語で書きなさい。', a:['sister','Sister'], hint:'兄弟と同じく区別なし。' },
-    { t:'家族', type:'i', q:'「祖父」を英語で書きなさい。', a:['grandfather','Grandfather'], hint:'grand + father。grandpa とも。' },
-    { t:'家族', type:'i', q:'「祖母」を英語で書きなさい。', a:['grandmother','Grandmother'], hint:'grand + mother。grandma とも。' },
+    { t:'家族', d:1, type:'i', q:'「母」を英語で書きなさい。', a:['mother','Mother'], hint:'mom も可。' },
+    { t:'家族', d:1, type:'i', q:'「父」を英語で書きなさい。', a:['father','Father'], hint:'dad も可。' },
+    { t:'家族', d:1, type:'i', q:'「兄・弟」を英語で書きなさい。', a:['brother','Brother'], hint:'英語では年上・年下を区別しない。' },
+    { t:'家族', d:1, type:'i', q:'「姉・妹」を英語で書きなさい。', a:['sister','Sister'], hint:'兄弟と同じく区別なし。' },
+    { t:'家族', d:1, type:'i', q:'「祖父」を英語で書きなさい。', a:['grandfather','Grandfather'], hint:'grand + father。grandpa とも。' },
+    { t:'家族', d:1, type:'i', q:'「祖母」を英語で書きなさい。', a:['grandmother','Grandmother'], hint:'grand + mother。grandma とも。' },
     // 教科書範囲の単語
-    { t:'単語', type:'i', q:'「鉛筆」を英語で書きなさい。', a:['pencil','Pencil'], hint:'教科書 p.26。' },
-    { t:'単語', type:'i', q:'「辞書」を英語で書きなさい。', a:['dictionary','Dictionary'], hint:'dic-tion-a-ry。教科書 p.37。' },
-    { t:'単語', type:'i', q:'「消しゴム」を英語で書きなさい。', a:['eraser','Eraser'], hint:'母音(e)で始まるので an eraser。' },
-    { t:'単語', type:'i', q:'「ノート」を英語で書きなさい。', a:['notebook','Notebook'], hint:'note + book。' },
-    { t:'単語', type:'i', q:'「机」を英語で書きなさい。', a:['desk','Desk'], hint:'4文字。' },
-    { t:'単語', type:'i', q:'「本」を英語で書きなさい。', a:['book','Book'], hint:'a book。' },
+    { t:'単語', d:1, type:'i', q:'「鉛筆」を英語で書きなさい。', a:['pencil','Pencil'], hint:'教科書 p.26。' },
+    { t:'単語', d:1, type:'i', q:'「辞書」を英語で書きなさい。', a:['dictionary','Dictionary'], hint:'dic-tion-a-ry。教科書 p.37。' },
+    { t:'単語', d:1, type:'i', q:'「消しゴム」を英語で書きなさい。', a:['eraser','Eraser'], hint:'母音(e)で始まるので an eraser。' },
+    { t:'単語', d:1, type:'i', q:'「ノート」を英語で書きなさい。', a:['notebook','Notebook'], hint:'note + book。' },
+    { t:'単語', d:1, type:'i', q:'「机」を英語で書きなさい。', a:['desk','Desk'], hint:'4文字。' },
+    { t:'単語', d:1, type:'i', q:'「本」を英語で書きなさい。', a:['book','Book'], hint:'a book。' },
     // 文法（Lesson 1〜2）
-    { t:'文法 Lesson1', type:'c', q:'Hello, I ___ Riku.', opts:['am','are','is','be'], a:'am', hint:'主語 I のbe動詞は am。' },
-    { t:'文法 Lesson1', type:'c', q:'___ you from Canada? — Yes, I am.', opts:['Am','Are','Is','Do'], a:'Are', hint:'主語 you の疑問文は Are で始める。' },
-    { t:'文法 Lesson1', type:'c', q:'I\'m ___ Australia.', opts:['in','at','from','to'], a:'from', hint:'I\'m from ~ で「～出身です」。' },
-    { t:'文法 Lesson1', type:'i', q:'「あなたは日本出身ですか？」を英語で書きなさい。', a:['Are you from Japan?','are you from japan?','Are you from Japan','are you from japan'], hint:'Are you + from + 国名 ?' },
-    { t:'文法 Lesson1', type:'i', q:'「私はアメリカ出身ではありません。」を英語で書きなさい。', a:['I\'m not from America.','I am not from America.','i\'m not from america.','i am not from america.','I\'m not from America','I am not from America'], hint:'be動詞のすぐ後に not。' },
-    { t:'文法 Lesson1', type:'i', q:'「あなたはサッカーファンですか？」を英語で書きなさい。', a:['Are you a soccer fan?','are you a soccer fan?','Are you a soccer fan','are you a soccer fan'], hint:'Are you + a + 名詞 ?' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'Hello, I ___ Riku.', opts:['am','are','is','be'], a:'am', hint:'主語 I のbe動詞は am。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'___ you from Canada? — Yes, I am.', opts:['Am','Are','Is','Do'], a:'Are', hint:'主語 you の疑問文は Are で始める。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'I\'m ___ Australia.', opts:['in','at','from','to'], a:'from', hint:'I\'m from ~ で「～出身です」。' },
+    { t:'文法 Lesson1', d:3, type:'i', q:'「あなたは日本出身ですか？」を英語で書きなさい。', a:['Are you from Japan?','are you from japan?','Are you from Japan','are you from japan'], hint:'Are you + from + 国名 ?' },
+    { t:'文法 Lesson1', d:3, type:'i', q:'「私はアメリカ出身ではありません。」を英語で書きなさい。', a:['I\'m not from America.','I am not from America.','i\'m not from america.','i am not from america.','I\'m not from America','I am not from America'], hint:'be動詞のすぐ後に not。' },
+    { t:'文法 Lesson1', d:3, type:'i', q:'「あなたはサッカーファンですか？」を英語で書きなさい。', a:['Are you a soccer fan?','are you a soccer fan?','Are you a soccer fan','are you a soccer fan'], hint:'Are you + a + 名詞 ?' },
     // 文法（Lesson 2）
-    { t:'文法 Lesson2', type:'c', q:'___ this? — It\'s a pen.', opts:['What\'s','Who\'s','Where\'s','How\'s'], a:'What\'s', hint:'「これは何？」と物を尋ねる疑問詞 what。' },
-    { t:'文法 Lesson2', type:'c', q:'Is this a dictionary? — No, it ___.', opts:['isn\'t','aren\'t','don\'t','not'], a:'isn\'t', hint:'is の否定の短縮形は isn\'t。' },
-    { t:'文法 Lesson2', type:'i', q:'「これは何ですか？」を英語で書きなさい。', a:['What\'s this?','What is this?','what\'s this?','what is this?','What\'s this','What is this'], hint:'What + is + this ?' },
-    { t:'文法 Lesson2', type:'c', q:'This is ___ apple.', opts:['a','an','the','/'], a:'an', hint:'母音 (a/i/u/e/o) の音で始まる単語の前は an。' },
-    { t:'文法 Lesson2', type:'c', q:'That\'s ___ eraser.', opts:['a','an','the','/'], a:'an', hint:'eraser は母音(e)で始まる音 → an。' },
-    { t:'文法 Lesson2', type:'i', q:'「私はテニスが好きです。」を英語で書きなさい。', a:['I like tennis.','i like tennis.','I like tennis','i like tennis'], hint:'I + like + 名詞。スポーツ名は無冠詞。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'___ this? — It\'s a pen.', opts:['What\'s','Who\'s','Where\'s','How\'s'], a:'What\'s', hint:'「これは何？」と物を尋ねる疑問詞 what。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'Is this a dictionary? — No, it ___.', opts:['isn\'t','aren\'t','don\'t','not'], a:'isn\'t', hint:'is の否定の短縮形は isn\'t。' },
+    { t:'文法 Lesson2', d:3, type:'i', q:'「これは何ですか？」を英語で書きなさい。', a:['What\'s this?','What is this?','what\'s this?','what is this?','What\'s this','What is this'], hint:'What + is + this ?' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'This is ___ apple.', opts:['a','an','the','/'], a:'an', hint:'母音 (a/i/u/e/o) の音で始まる単語の前は an。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'That\'s ___ eraser.', opts:['a','an','the','/'], a:'an', hint:'eraser は母音(e)で始まる音 → an。' },
+    { t:'文法 Lesson2', d:3, type:'i', q:'「私はテニスが好きです。」を英語で書きなさい。', a:['I like tennis.','i like tennis.','I like tennis','i like tennis'], hint:'I + like + 名詞。スポーツ名は無冠詞。' },,
+    // ===== 追加：アルファベット =====
+    { t:'アルファベット', d:1, type:'c', q:'アルファベットの大文字「A」の次は？', opts:['B','b','C','D'], a:'B', hint:'A→B→C→D…の順。' },
+    { t:'アルファベット', d:1, type:'c', q:'アルファベットは全部で何文字？', opts:['24','25','26','27'], a:'26', hint:'A〜Zまでで26文字。' },
+    { t:'アルファベット', d:1, type:'i', q:'「f」の大文字は？', a:['F'], hint:'小文字fの大文字はF。' },
+    { t:'アルファベット', d:1, type:'i', q:'「Q」の小文字は？', a:['q'], hint:'大文字Qの小文字はq。pと混同しないように。' },
+    { t:'アルファベット', d:2, type:'c', q:'母音字（aiueo）を全部選んだのはどれ？', opts:['a, e, i, o, u','a, b, c, d, e','a, i, u, e, o, y','b, c, d, f, g'], a:'a, e, i, o, u', hint:'母音字は5つ：a, e, i, o, u。' },
+    { t:'アルファベット', d:2, type:'i', q:'アルファベットの最後の文字（大文字）は？', a:['Z'], hint:'A〜Zの最後はZ。' },
+    // ===== 追加：数字 =====
+    { t:'数字', d:1, type:'i', q:'「two」を数字で書きなさい。', a:['2'], hint:'two = 2。' },
+    { t:'数字', d:1, type:'i', q:'「five」を数字で書きなさい。', a:['5'], hint:'five = 5。' },
+    { t:'数字', d:1, type:'i', q:'「nine」を数字で書きなさい。', a:['9'], hint:'nine = 9。' },
+    { t:'数字', d:1, type:'i', q:'「16」を英語で書きなさい。', a:['sixteen'], hint:'six + teen = sixteen。' },
+    { t:'数字', d:1, type:'i', q:'「3」を英語で書きなさい。', a:['three'], hint:'th から始まる。three。' },
+    { t:'数字', d:1, type:'i', q:'「14」を英語で書きなさい。', a:['fourteen'], hint:'four + teen = fourteen。' },
+    { t:'数字', d:2, type:'c', q:'「40」を英語で書くと？', opts:['fourteen','forty','fourty','forteen'], a:'forty', hint:'40は forty（uなし、注意）。fourtyは間違い。' },
+    { t:'数字', d:2, type:'c', q:'「30」を英語で書くと？', opts:['thirteen','thirty','threety','thirthy'], a:'thirty', hint:'30は thirty。13(thirteen)と区別。' },
+    // ===== 追加：家族 =====
+    { t:'家族', d:1, type:'i', q:'「両親」を英語で書きなさい。（複数形）', a:['parents'], hint:'parent（親）の複数形。' },
+    { t:'家族', d:1, type:'i', q:'「家族」を英語で書きなさい。', a:['family'], hint:'fで始まる。my family（私の家族）。' },
+    { t:'家族', d:1, type:'i', q:'「叔父・伯父」を英語で書きなさい。', a:['uncle'], hint:'uncle = おじ。' },
+    { t:'家族', d:1, type:'i', q:'「叔母・伯母」を英語で書きなさい。', a:['aunt'], hint:'aunt = おば。' },
+    { t:'家族', d:2, type:'i', q:'「いとこ」を英語で書きなさい。', a:['cousin'], hint:'cousin（カズン）。' },
+    // ===== 追加：単語 =====
+    { t:'単語', d:1, type:'i', q:'「リンゴ」を英語で書きなさい。', a:['apple','an apple'], hint:'a で始まる。母音始まりなので冠詞は an。' },
+    { t:'単語', d:1, type:'i', q:'「犬」を英語で書きなさい。', a:['dog','a dog'], hint:'dog。' },
+    { t:'単語', d:1, type:'i', q:'「猫」を英語で書きなさい。', a:['cat','a cat'], hint:'cat。' },
+    { t:'単語', d:1, type:'i', q:'「学校」を英語で書きなさい。', a:['school'], hint:'school。複数のスペルに注意（schhol×）。' },
+    { t:'単語', d:1, type:'i', q:'「先生」を英語で書きなさい。', a:['teacher','a teacher'], hint:'teacher。-er で「〜する人」。' },
+    { t:'単語', d:1, type:'i', q:'「学生・生徒」を英語で書きなさい。', a:['student','a student'], hint:'student。' },
+    { t:'単語', d:1, type:'i', q:'「友達」を英語で書きなさい。', a:['friend','a friend'], hint:'friend。iの位置に注意（fiend×、freind×）。' },
+    // ===== 追加：文法 Lesson1（be動詞、自己紹介）=====
+    { t:'文法 Lesson1', d:1, type:'c', q:'I ___ Yuki.（私はユキです）の空欄は？', opts:['am','are','is','be'], a:'am', hint:'主語が I のとき be動詞は am。' },
+    { t:'文法 Lesson1', d:1, type:'c', q:'You ___ a teacher.（あなたは先生です）の空欄は？', opts:['am','are','is','be'], a:'are', hint:'主語が You のとき be動詞は are。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'「I am」を短く書くと？', opts:['I\'am','Im','I\'m','Iam'], a:'I\'m', hint:'I + amの短縮形は I\'m。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'「You are」を短く書くと？', opts:['You\'r','You\'re','Your','Yore'], a:'You\'re', hint:'You + areの短縮形は You\'re。your（あなたの）と混同注意。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'I ___ not from China.（私は中国出身ではありません）の空欄は？', opts:['am','are','is','do'], a:'am', hint:'否定文も be動詞はそのまま、後ろに not。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'Are you a soccer fan? の答え方として正しいのは？（Yesの場合）', opts:['Yes, I am.','Yes, I are.','Yes, you am.','Yes, I do.'], a:'Yes, I am.', hint:'Are you 〜? に対しては Yes, I am. / No, I am not. で答える。' },
+    { t:'文法 Lesson1', d:2, type:'c', q:'Are you from Japan? の答え方として正しいのは？（Noの場合）', opts:['No, I are not.','No, I am not.','No, I don\'t.','No, you not.'], a:'No, I am not.', hint:'否定の答えは No, I am not. （短縮形 I\'m not）。' },
+    { t:'文法 Lesson1', d:3, type:'i', q:'「私は中学生です。」を英語で書きなさい。（I で始める）', a:['I am a junior high school student.','I\'m a junior high school student.'], hint:'I am + a + 名詞。短縮形でもOK。' },
+    { t:'文法 Lesson1', d:3, type:'i', q:'「あなたはケンですか？」を英語で書きなさい。', a:['Are you Ken?'], hint:'疑問文は be動詞を文頭へ。Are you 〜?' },
+    // ===== 追加：文法 Lesson2（this/that、What） =====
+    { t:'文法 Lesson2', d:1, type:'c', q:'This ___ my book.（これは私の本です）の空欄は？', opts:['am','are','is','be'], a:'is', hint:'主語が This/That/It のとき be動詞は is。' },
+    { t:'文法 Lesson2', d:1, type:'c', q:'That ___ a beautiful flower.（あれは美しい花です）の空欄は？', opts:['am','are','is','be'], a:'is', hint:'That + is（短縮形 That\'s）。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'「That is」を短く書くと？', opts:['That\'s','Thats','That\'is','Thas'], a:'That\'s', hint:'That + is = That\'s。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'Is this a pen? の答え方として正しいのは？（Yesの場合）', opts:['Yes, this is.','Yes, it is.','Yes, that is.','Yes, is.'], a:'Yes, it is.', hint:'this/thatで聞かれたら it で答えるのが基本。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'Is this a dictionary? の答え方として正しいのは？（Noの場合）', opts:['No, it isn\'t.','No, this isn\'t.','No, it is.','No, it not.'], a:'No, it isn\'t.', hint:'否定の答えは No, it isn\'t. または No, it is not. が正しい。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'This is ___ orange.（これはオレンジです）の空欄は？', opts:['a','an','the','×（不要）'], a:'an', hint:'orange は母音(o)で始まるので an。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'That is ___ umbrella.（あれは傘です）の空欄は？', opts:['a','an','the','×（不要）'], a:'an', hint:'umbrella は母音(u)で始まるので an。' },
+    { t:'文法 Lesson2', d:2, type:'c', q:'This is ___ new bag.（これは新しいかばんです）の空欄は？', opts:['a','an','the','×（不要）'], a:'a', hint:'new は子音(n)で始まるので a。' },
+    { t:'文法 Lesson2', d:3, type:'i', q:'「あれは何ですか？」を英語で書きなさい。', a:['What is that?','What\'s that?'], hint:'What is 〜? の語順。短縮形 What\'s でもOK。' },
+    { t:'文法 Lesson2', d:3, type:'i', q:'「これは私のノートです。」を英語で書きなさい。', a:['This is my notebook.'], hint:'This is + 所有格 my + 名詞。' },
+    // ===== 新トピック：好き嫌い・一般動詞（Lesson2 後半・ワーク p.14-24） =====
+    { t:'好き嫌い', d:2, type:'c', q:'I ___ tennis.（私はテニスが好きです）の空欄は？', opts:['am','like','is','are'], a:'like', hint:'動作を表すのは一般動詞。likeは「好む」。' },
+    { t:'好き嫌い', d:2, type:'c', q:'I ___ ___ music.（私は音楽が好きではありません）の空欄は？', opts:['am not','do not','is not','don\'t like'], a:'don\'t like', hint:'一般動詞の否定は do not (don\'t) + 動詞の原形。' },
+    { t:'好き嫌い', d:2, type:'c', q:'Do you like dogs? の答え方は？（Yesの場合）', opts:['Yes, I am.','Yes, I do.','Yes, I like.','Yes, you do.'], a:'Yes, I do.', hint:'Do you 〜? には Yes, I do. / No, I don\'t. で答える。' },
+    { t:'好き嫌い', d:3, type:'i', q:'「あなたは野球が好きですか？」を英語で書きなさい。', a:['Do you like baseball?'], hint:'一般動詞の疑問文は Do you + 動詞の原形 〜?' },
+    { t:'好き嫌い', d:3, type:'i', q:'「私は数学が好きではありません。」を英語で書きなさい。（短縮形を使ってよい）', a:['I don\'t like math.','I do not like math.'], hint:'I + don\'t + 動詞原形。数学は math。' }
   ],
 
   math: [
     // 正負の数（第1章）
-    { t:'正負の数', type:'i', q:'(+3) + (+5) = ?', a:['8','+8'], hint:'同符号どうしは絶対値の和に共通の符号。' },
-    { t:'正負の数', type:'i', q:'(-4) + (-6) = ?', a:['-10','−10'], hint:'同符号。4+6=10にマイナス。' },
-    { t:'正負の数', type:'i', q:'(+7) + (-3) = ?', a:['4','+4'], hint:'異符号は絶対値の差に、絶対値の大きい方の符号。' },
-    { t:'正負の数', type:'i', q:'(-8) - (-3) = ?', a:['-5','−5'], hint:'引き算は符号を変えて足し算に。-8+3=-5。' },
-    { t:'正負の数', type:'i', q:'|-9| はいくつ？', a:['9','+9'], hint:'絶対値は 0 からの距離。符号を取った値。' },
-    { t:'正負の数', type:'c', q:'-5 と -8 ではどちらが大きい？', opts:['-5','-8','同じ','どちらでもよい'], a:'-5', hint:'負の数は絶対値が小さい方が大きい。' },
-    { t:'正負の数', type:'i', q:'(-4) × 3 = ?', a:['-12','−12'], hint:'異符号の積はマイナス。' },
-    { t:'正負の数', type:'i', q:'(-5) × (-6) = ?', a:['30','+30'], hint:'同符号の積はプラス。' },
-    { t:'正負の数', type:'i', q:'(-18) ÷ (-3) = ?', a:['6','+6'], hint:'同符号の商はプラス。' },
-    { t:'正負の数', type:'i', q:'(-2)² = ?', a:['4','+4'], hint:'(-2)×(-2)=4。負の数の偶数乗はプラス。' },
-    { t:'正負の数', type:'i', q:'-3² = ?（注意！）', a:['-9','−9'], hint:'-3² = -(3×3) = -9。(-3)² との違いに注意。' },
-    { t:'正負の数', type:'i', q:'5 - 6 × (-2) = ?', a:['17','+17'], hint:'四則混合は乗除を先に。6×(-2)=-12、5-(-12)=17。' },
-    { t:'正負の数', type:'i', q:'(-2)² + (-3)² = ?', a:['13','+13'], hint:'4 + 9 = 13。' },
-    { t:'正負の数', type:'i', q:'(-12) ÷ 4 × (-3) = ?', a:['9','+9'], hint:'-12÷4=-3、-3×(-3)=9。' },
+    { t:'正負の数', d:1, type:'i', q:'(+3) + (+5) = ?', a:['8','+8'], hint:'同符号どうしは絶対値の和に共通の符号。' },
+    { t:'正負の数', d:2, type:'i', q:'(-4) + (-6) = ?', a:['-10','−10'], hint:'同符号。4+6=10にマイナス。' },
+    { t:'正負の数', d:2, type:'i', q:'(+7) + (-3) = ?', a:['4','+4'], hint:'異符号は絶対値の差に、絶対値の大きい方の符号。' },
+    { t:'正負の数', d:2, type:'i', q:'(-8) - (-3) = ?', a:['-5','−5'], hint:'引き算は符号を変えて足し算に。-8+3=-5。' },
+    { t:'正負の数', d:1, type:'i', q:'|-9| はいくつ？', a:['9','+9'], hint:'絶対値は 0 からの距離。符号を取った値。' },
+    { t:'正負の数', d:1, type:'c', q:'-5 と -8 ではどちらが大きい？', opts:['-5','-8','同じ','どちらでもよい'], a:'-5', hint:'負の数は絶対値が小さい方が大きい。' },
+    { t:'正負の数', d:2, type:'i', q:'(-4) × 3 = ?', a:['-12','−12'], hint:'異符号の積はマイナス。' },
+    { t:'正負の数', d:2, type:'i', q:'(-5) × (-6) = ?', a:['30','+30'], hint:'同符号の積はプラス。' },
+    { t:'正負の数', d:2, type:'i', q:'(-18) ÷ (-3) = ?', a:['6','+6'], hint:'同符号の商はプラス。' },
+    { t:'正負の数', d:2, type:'i', q:'(-2)² = ?', a:['4','+4'], hint:'(-2)×(-2)=4。負の数の偶数乗はプラス。' },
+    { t:'正負の数', d:3, type:'i', q:'-3² = ?（注意！）', a:['-9','−9'], hint:'-3² = -(3×3) = -9。(-3)² との違いに注意。' },
+    { t:'正負の数', d:2, type:'i', q:'5 - 6 × (-2) = ?', a:['17','+17'], hint:'四則混合は乗除を先に。6×(-2)=-12、5-(-12)=17。' },
+    { t:'正負の数', d:2, type:'i', q:'(-2)² + (-3)² = ?', a:['13','+13'], hint:'4 + 9 = 13。' },
+    { t:'正負の数', d:2, type:'i', q:'(-12) ÷ 4 × (-3) = ?', a:['9','+9'], hint:'-12÷4=-3、-3×(-3)=9。' },
     // 文字式（第2章 1節・2節）
-    { t:'文字式・表記', type:'i', q:'a × 3 を文字式の表し方で書きなさい。', a:['3a'], hint:'数を先、文字を後。× は省略。' },
-    { t:'文字式・表記', type:'i', q:'x × x × x を累乗を使って表しなさい。', a:['x^3','x³','x3'], hint:'同じ文字の積は指数で。' },
-    { t:'文字式・表記', type:'i', q:'a ÷ 5 を分数の形で表しなさい。', a:['a/5','a÷5'], hint:'÷ は分数の形に。' },
-    { t:'文字式・表記', type:'i', q:'2 × x × y を文字式で表しなさい。', a:['2xy','2yx'], hint:'数 → アルファベット順が普通。' },
-    { t:'文字式・表記', type:'i', q:'(-1) × x を文字式で表しなさい。', a:['-x','−x'], hint:'-1 × x は -x。1 は省略。' },
-    { t:'多項式の計算', type:'i', q:'5x + 3x = ?', a:['8x'], hint:'同類項は係数を足す。5+3=8。' },
-    { t:'多項式の計算', type:'i', q:'4a - 7a = ?', a:['-3a','−3a'], hint:'係数 4 - 7 = -3。' },
-    { t:'多項式の計算', type:'i', q:'2x + 5 + 3x - 2 = ?', a:['5x+3','5x + 3'], hint:'同類項どうしまとめる。2x+3x=5x、5-2=3。' },
-    { t:'多項式の計算', type:'i', q:'(3x + 4) + (2x - 1) = ?', a:['5x+3','5x + 3'], hint:'カッコをはずしてまとめる。' },
-    { t:'多項式の計算', type:'i', q:'(5a + 2) - (3a - 4) = ?', a:['2a+6','2a + 6'], hint:'引くカッコは符号を反転。5a+2-3a+4。' },
-    { t:'多項式の計算', type:'i', q:'3(2x + 1) = ?', a:['6x+3','6x + 3'], hint:'分配法則：3 を各項にかける。' },
-    { t:'多項式の計算', type:'i', q:'-2(x - 3) = ?', a:['-2x+6','-2x + 6','−2x+6'], hint:'-2 を各項に。-2×(-3)=+6 に注意。' },
-    { t:'多項式の計算', type:'i', q:'4(x + 2) - 3(x - 1) = ?', a:['x+11','x + 11'], hint:'4x+8-3x+3 = x+11。' },
-    { t:'式の値', type:'i', q:'x = -2 のとき、3x + 5 の値は？', a:['-1','−1'], hint:'3×(-2)+5 = -6+5 = -1。' },
-    { t:'式の値', type:'i', q:'x = 3, y = -2 のとき、2x - y の値は？', a:['8','+8'], hint:'2×3 - (-2) = 6+2 = 8。' },
+    { t:'文字式・表記', d:1, type:'i', q:'a × 3 を文字式の表し方で書きなさい。', a:['3a'], hint:'数を先、文字を後。× は省略。' },
+    { t:'文字式・表記', d:1, type:'i', q:'x × x × x を累乗を使って表しなさい。', a:['x^3','x³','x3'], hint:'同じ文字の積は指数で。' },
+    { t:'文字式・表記', d:1, type:'i', q:'a ÷ 5 を分数の形で表しなさい。', a:['a/5','a÷5'], hint:'÷ は分数の形に。' },
+    { t:'文字式・表記', d:1, type:'i', q:'2 × x × y を文字式で表しなさい。', a:['2xy','2yx'], hint:'数 → アルファベット順が普通。' },
+    { t:'文字式・表記', d:1, type:'i', q:'(-1) × x を文字式で表しなさい。', a:['-x','−x'], hint:'-1 × x は -x。1 は省略。' },
+    { t:'多項式の計算', d:2, type:'i', q:'5x + 3x = ?', a:['8x'], hint:'同類項は係数を足す。5+3=8。' },
+    { t:'多項式の計算', d:2, type:'i', q:'4a - 7a = ?', a:['-3a','−3a'], hint:'係数 4 - 7 = -3。' },
+    { t:'多項式の計算', d:2, type:'i', q:'2x + 5 + 3x - 2 = ?', a:['5x+3','5x + 3'], hint:'同類項どうしまとめる。2x+3x=5x、5-2=3。' },
+    { t:'多項式の計算', d:2, type:'i', q:'(3x + 4) + (2x - 1) = ?', a:['5x+3','5x + 3'], hint:'カッコをはずしてまとめる。' },
+    { t:'多項式の計算', d:2, type:'i', q:'(5a + 2) - (3a - 4) = ?', a:['2a+6','2a + 6'], hint:'引くカッコは符号を反転。5a+2-3a+4。' },
+    { t:'多項式の計算', d:2, type:'i', q:'3(2x + 1) = ?', a:['6x+3','6x + 3'], hint:'分配法則：3 を各項にかける。' },
+    { t:'多項式の計算', d:2, type:'i', q:'-2(x - 3) = ?', a:['-2x+6','-2x + 6','−2x+6'], hint:'-2 を各項に。-2×(-3)=+6 に注意。' },
+    { t:'多項式の計算', d:2, type:'i', q:'4(x + 2) - 3(x - 1) = ?', a:['x+11','x + 11'], hint:'4x+8-3x+3 = x+11。' },
+    { t:'式の値', d:3, type:'i', q:'x = -2 のとき、3x + 5 の値は？', a:['-1','−1'], hint:'3×(-2)+5 = -6+5 = -1。' },
+    { t:'式の値', d:3, type:'i', q:'x = 3, y = -2 のとき、2x - y の値は？', a:['8','+8'], hint:'2×3 - (-2) = 6+2 = 8。' },,
+    // ===== 追加：正負の数 =====
+    { t:'正負の数', d:1, type:'i', q:'(+5) + (+4) = ?', a:['9','+9'], hint:'同符号の和は絶対値を足して共通の符号。' },
+    { t:'正負の数', d:1, type:'i', q:'(-3) + (-7) = ?', a:['-10'], hint:'同符号の和。絶対値3+7=10、符号はマイナス。' },
+    { t:'正負の数', d:1, type:'i', q:'(+8) - (+3) = ?', a:['5','+5'], hint:'引き算は反対の数を足す → (+8)+(-3)。' },
+    { t:'正負の数', d:1, type:'i', q:'0 - (+6) = ?', a:['-6'], hint:'0から正の数を引くと負になる。' },
+    { t:'正負の数', d:1, type:'i', q:'|-15| はいくつ？', a:['15','+15'], hint:'絶対値は符号を取った値。' },
+    { t:'正負の数', d:1, type:'i', q:'|+7| はいくつ？', a:['7','+7'], hint:'絶対値は符号を取った値。' },
+    { t:'正負の数', d:1, type:'c', q:'-2 と +3 ではどちらが大きい？', opts:['-2','+3','同じ'], a:'+3', hint:'数直線で右にある方が大きい。' },
+    { t:'正負の数', d:1, type:'c', q:'数直線上で原点から左に4の位置の数は？', opts:['+4','-4','4','0'], a:'-4', hint:'原点より左は負の数。' },
+    { t:'正負の数', d:2, type:'i', q:'(+10) - (-4) = ?', a:['14','+14'], hint:'マイナスを引くはプラスを足す。10+4=14。' },
+    { t:'正負の数', d:2, type:'i', q:'(-6) - (+8) = ?', a:['-14'], hint:'(-6)+(-8)に変換。同符号の和。' },
+    { t:'正負の数', d:2, type:'i', q:'(-9) ÷ 3 = ?', a:['-3'], hint:'異符号の除法は負。絶対値9÷3=3。' },
+    { t:'正負の数', d:2, type:'i', q:'(-4)² × (-2) = ?', a:['-32'], hint:'(-4)²=16、16×(-2)=-32。' },
+    { t:'正負の数', d:2, type:'i', q:'8 + (-3) × 2 = ?', a:['2','+2'], hint:'掛け算が先。-3×2=-6、8+(-6)=2。' },
+    { t:'正負の数', d:2, type:'i', q:'(-15) ÷ (-3) × 2 = ?', a:['10','+10'], hint:'(-15)÷(-3)=5、5×2=10。' },
+    { t:'正負の数', d:3, type:'i', q:'-2³ = ?（注意！）', a:['-8'], hint:'-はカッコの外。-(2³)=-(8)=-8。' },
+    { t:'正負の数', d:3, type:'i', q:'(-4)² - (-3)² = ?', a:['7','+7'], hint:'(-4)²=16、(-3)²=9、16-9=7。' },
+    // ===== 追加：文字式・表記 =====
+    { t:'文字式・表記', d:1, type:'i', q:'a × b × 4 を文字式の形で書きなさい。', a:['4ab'], hint:'数は先、文字はアルファベット順。' },
+    { t:'文字式・表記', d:1, type:'i', q:'(-3) × x × y を文字式の形で書きなさい。', a:['-3xy'], hint:'符号付きの数を先、文字を後ろに。' },
+    { t:'文字式・表記', d:1, type:'i', q:'m × m を累乗を使って表しなさい。', a:['m²','m^2'], hint:'同じ文字の積は累乗で書く。' },
+    { t:'文字式・表記', d:1, type:'i', q:'2 × a × a × b を文字式で書きなさい。', a:['2a²b','2a^2b'], hint:'a×a=a²、bは後ろに。' },
+    { t:'文字式・表記', d:1, type:'i', q:'(x + y) × 3 を文字式で書きなさい。', a:['3(x+y)','3(x + y)'], hint:'カッコはそのまま、数は前。' },
+    { t:'文字式・表記', d:1, type:'i', q:'12 ÷ a を分数の形で表しなさい。', a:['12/a'], hint:'割り算は分数の形で書く。' },
+    { t:'文字式・表記', d:1, type:'i', q:'a ÷ b × c を分数を使って表しなさい。', a:['ac/b'], hint:'a÷b=a/b、それに×cでac/b。' },
+    { t:'文字式・表記', d:2, type:'i', q:'1個 a 円のりんごを5個買ったときの代金を式で書きなさい（単位は不要）。', a:['5a'], hint:'代金=単価×個数。' },
+    { t:'文字式・表記', d:2, type:'i', q:'時速 x km で 3 時間進んだ道のりを式で書きなさい（単位は不要）。', a:['3x'], hint:'道のり=速さ×時間。' },
+    { t:'文字式・表記', d:2, type:'i', q:'100円玉が a 枚あるときの合計金額を式で書きなさい（単位は不要）。', a:['100a'], hint:'100×a。' },
+    { t:'文字式・表記', d:2, type:'i', q:'1個 60円のお菓子を x 個、1本 100円のジュースを y 本買ったときの合計金額を式で書きなさい（単位は不要）。', a:['60x+100y','60x + 100y','100y+60x','100y + 60x'], hint:'それぞれの代金を足す。' },
+    { t:'文字式・表記', d:2, type:'i', q:'縦 x cm、横 y cm の長方形の面積を式で書きなさい（単位は不要）。', a:['xy'], hint:'面積=縦×横。' },
+    { t:'文字式・表記', d:2, type:'i', q:'a 円の品物を b 円引きで買った代金を式で書きなさい（単位は不要）。', a:['a-b','a - b'], hint:'引いた金額。' },
+    // ===== 追加：多項式の計算 =====
+    { t:'多項式の計算', d:1, type:'i', q:'7x - 3x = ?', a:['4x','+4x'], hint:'同類項どうしの引き算。係数を引く。' },
+    { t:'多項式の計算', d:1, type:'i', q:'-2a + 5a = ?', a:['3a','+3a'], hint:'(-2+5)a = 3a。' },
+    { t:'多項式の計算', d:2, type:'i', q:'6x - 9x + 2x = ?', a:['-x','-1x'], hint:'(6-9+2)x = -1x = -x。' },
+    { t:'多項式の計算', d:2, type:'i', q:'3a + 5 - a - 8 = ?', a:['2a - 3','2a-3'], hint:'文字どうし、数どうし。' },
+    { t:'多項式の計算', d:2, type:'i', q:'(4x - 3) + (x + 7) = ?', a:['5x + 4','5x+4'], hint:'カッコを外して同類項。' },
+    { t:'多項式の計算', d:2, type:'i', q:'(6a + 1) - (4a - 5) = ?', a:['2a + 6','2a+6'], hint:'-(4a-5) = -4a+5、その後 (6a+1) とまとめる。' },
+    { t:'多項式の計算', d:2, type:'i', q:'-3(x + 2) = ?', a:['-3x - 6','-3x-6'], hint:'分配法則：-3×x、-3×2。' },
+    { t:'多項式の計算', d:2, type:'i', q:'5(2a - 1) = ?', a:['10a - 5','10a-5'], hint:'分配：5×2a、5×(-1)。' },
+    { t:'多項式の計算', d:3, type:'i', q:'-(3x - 5) = ?', a:['-3x + 5','-3x+5'], hint:'-1を分配。符号がすべて変わる。' },
+    { t:'多項式の計算', d:3, type:'i', q:'2(3x + 1) - 3(x - 4) = ?', a:['3x + 14','3x+14'], hint:'(6x+2)-(3x-12) = 6x+2-3x+12 = 3x+14。' },
+    { t:'多項式の計算', d:3, type:'i', q:'3(2a - b) - 2(a - 3b) = ?', a:['4a + 3b','4a+3b'], hint:'(6a-3b)-(2a-6b) = 6a-3b-2a+6b = 4a+3b。' },
+    { t:'多項式の計算', d:3, type:'i', q:'(x - 2y + 3) - (2x + y - 1) = ?', a:['-x - 3y + 4','-x-3y+4'], hint:'(2x+y-1)に-1分配で-2x-y+1。' },
+    // ===== 追加：式の値 =====
+    { t:'式の値', d:2, type:'i', q:'x = 4 のとき、5x の値は？', a:['20','+20'], hint:'x に 4 を代入：5×4=20。' },
+    { t:'式の値', d:2, type:'i', q:'a = -3 のとき、2a + 7 の値は？', a:['1','+1'], hint:'2×(-3)+7 = -6+7 = 1。' },
+    { t:'式の値', d:3, type:'i', q:'x = -2 のとき、x² の値は？', a:['4','+4'], hint:'(-2)² = (-2)×(-2) = 4。' },
+    { t:'式の値', d:3, type:'i', q:'x = -3 のとき、-x² の値は？（注意！）', a:['-9'], hint:'-x² は -(x²)。-((-3)²) = -9。' },
+    { t:'式の値', d:3, type:'i', q:'a = 2, b = -1 のとき、3a - 2b の値は？', a:['8','+8'], hint:'3×2 - 2×(-1) = 6+2 = 8。' },
+    { t:'式の値', d:3, type:'i', q:'x = -1 のとき、x³ - 2x + 1 の値は？', a:['2','+2'], hint:'(-1)³ - 2×(-1) + 1 = -1+2+1 = 2。' }
   ],
 
   japanese: [
     // 百人一首 1-15 暗記
     // 上の句 → 下の句（4択）
-    { t:'1番 天智天皇', type:'c', q:'「秋の田の かりほの庵の 苫をあらみ」の下の句は？', opts:['わが衣手は 露にぬれつつ','わが衣手に 雪は降りつつ','富士の高嶺に 雪は降りつつ','衣ほすてふ 天の香具山'], a:'わが衣手は 露にぬれつつ', hint:'1番・天智天皇。秋の田の番小屋で、衣手（そで）が露にぬれる情景。15番と上の句の似た構造に注意。' },
-    { t:'2番 持統天皇', type:'c', q:'「春過ぎて 夏来にけらし 白妙の」の下の句は？', opts:['衣ほすてふ 天の香具山','富士の高嶺に 雪は降りつつ','声聞く時ぞ 秋は悲しき','わが衣手は 露にぬれつつ'], a:'衣ほすてふ 天の香具山', hint:'2番・持統天皇。「白妙の衣を干している」と聞く天の香具山。' },
-    { t:'3番 柿本人麻呂', type:'c', q:'「あしびきの 山鳥の尾の しだり尾の」の下の句は？', opts:['ながながし夜を ひとりかも寝む','人には告げよ あまの釣舟','乙女のすがた しばしとどめむ','声聞く時ぞ 秋は悲しき'], a:'ながながし夜を ひとりかも寝む', hint:'3番・柿本人麻呂。「あしびきの」は「山」にかかる枕詞。長い秋の夜を独り寝。' },
-    { t:'4番 山部赤人', type:'c', q:'「田子の浦に うち出でてみれば 白妙の」の下の句は？', opts:['富士の高嶺に 雪は降りつつ','わが衣手は 露にぬれつつ','衣ほすてふ 天の香具山','三笠の山に 出でし月かも'], a:'富士の高嶺に 雪は降りつつ', hint:'4番・山部赤人。田子の浦から見る雪化粧の富士山。' },
-    { t:'5番 猿丸大夫', type:'c', q:'「奥山に 紅葉踏みわけ 鳴く鹿の」の下の句は？', opts:['声聞く時ぞ 秋は悲しき','ながながし夜を ひとりかも寝む','白きを見れば 夜ぞふけにける','三笠の山に 出でし月かも'], a:'声聞く時ぞ 秋は悲しき', hint:'5番・猿丸大夫。秋の山中で鹿の鳴き声を聞き、もの悲しさを感じる。' },
-    { t:'6番 大伴家持', type:'c', q:'「かささぎの 渡せる橋に 置く霜の」の下の句は？', opts:['白きを見れば 夜ぞふけにける','人には告げよ あまの釣舟','乙女のすがた しばしとどめむ','恋ぞ積もりて 淵となりぬる'], a:'白きを見れば 夜ぞふけにける', hint:'6番・中納言家持（大伴家持）。「かささぎの渡せる橋」は宮中の階段の見立て、または七夕の天の川の橋。' },
-    { t:'7番 安倍仲麿', type:'c', q:'「天の原 ふりさけ見れば 春日なる」の下の句は？', opts:['三笠の山に 出でし月かも','富士の高嶺に 雪は降りつつ','人には告げよ あまの釣舟','白きを見れば 夜ぞふけにける'], a:'三笠の山に 出でし月かも', hint:'7番・安倍仲麿。中国（唐）にいるとき、故郷の春日にある三笠山に昇る月を思い出して詠んだ。' },
-    { t:'8番 喜撰法師', type:'c', q:'「わが庵は 都のたつみ しかぞすむ」の下の句は？', opts:['世をうぢ山と 人はいふなり','声聞く時ぞ 秋は悲しき','三笠の山に 出でし月かも','知るも知らぬも 逢坂の関'], a:'世をうぢ山と 人はいふなり', hint:'8番・喜撰法師。「うぢ山」と「憂し（憂世）」をかけたしゃれ。「たつみ」は東南の方角。' },
-    { t:'9番 小野小町', type:'c', q:'「花の色は うつりにけりな いたづらに」の下の句は？', opts:['わが身世にふる ながめせしまに','わが衣手は 露にぬれつつ','わが衣手に 雪は降りつつ','乱れそめにし われならなくに'], a:'わが身世にふる ながめせしまに', hint:'9番・小野小町。花の色（＝若さ・美しさ）が衰えていく嘆き。「ながめ」は「長雨」と「眺め」のかけことば。' },
-    { t:'10番 蝉丸', type:'c', q:'「これやこの 行くも帰るも 別れては」の下の句は？', opts:['知るも知らぬも 逢坂の関','人には告げよ あまの釣舟','乱れそめにし われならなくに','声聞く時ぞ 秋は悲しき'], a:'知るも知らぬも 逢坂の関', hint:'10番・蝉丸。逢坂の関は京都と滋賀の境。出会いと別れの場所。' },
-    { t:'11番 小野篁', type:'c', q:'「わたの原 八十島かけて 漕ぎ出でぬと」の下の句は？', opts:['人には告げよ あまの釣舟','三笠の山に 出でし月かも','乙女のすがた しばしとどめむ','白きを見れば 夜ぞふけにける'], a:'人には告げよ あまの釣舟', hint:'11番・参議篁（小野篁）。隠岐へ流される途中、別れた人々への伝言を漁師に託す歌。' },
-    { t:'12番 僧正遍昭', type:'c', q:'「天つ風 雲の通ひ路 吹きとぢよ」の下の句は？', opts:['乙女のすがた しばしとどめむ','人には告げよ あまの釣舟','ながながし夜を ひとりかも寝む','恋ぞ積もりて 淵となりぬる'], a:'乙女のすがた しばしとどめむ', hint:'12番・僧正遍昭。天女（乙女）を見ていたいので、雲の通り道を風で閉ざしてほしいという歌。' },
-    { t:'13番 陽成院', type:'c', q:'「筑波嶺の 峰より落つる 男女川（みなのがわ）」の下の句は？', opts:['恋ぞ積もりて 淵となりぬる','乱れそめにし われならなくに','声聞く時ぞ 秋は悲しき','人には告げよ あまの釣舟'], a:'恋ぞ積もりて 淵となりぬる', hint:'13番・陽成院。筑波山の男女川（みなのがわ）の流れが積もって淵になるように、恋心も積もる。' },
-    { t:'14番 源融', type:'c', q:'「陸奥の しのぶもぢずり 誰ゆゑに」の下の句は？', opts:['乱れそめにし われならなくに','わが身世にふる ながめせしまに','わが衣手は 露にぬれつつ','ながながし夜を ひとりかも寝む'], a:'乱れそめにし われならなくに', hint:'14番・河原左大臣（源融）。「しのぶもぢずり」は陸奥の乱れ模様の染め物。「あなたのせいで心が乱れたのに」。' },
-    { t:'15番 光孝天皇', type:'c', q:'「君がため 春の野に出でて 若菜つむ」の下の句は？', opts:['わが衣手に 雪は降りつつ','わが衣手は 露にぬれつつ','人には告げよ あまの釣舟','声聞く時ぞ 秋は悲しき'], a:'わが衣手に 雪は降りつつ', hint:'15番・光孝天皇。1番（露にぬれつつ）と紛らわしい！こちらは「雪は降りつつ」。「君がため」（あなたのために）若菜（早春のセリ・ナズナ等）を摘む。' },
+    { t:'1番 天智天皇', d:1, type:'c', q:'「秋の田の かりほの庵の 苫をあらみ」の下の句は？', opts:['わが衣手は 露にぬれつつ','わが衣手に 雪は降りつつ','富士の高嶺に 雪は降りつつ','衣ほすてふ 天の香具山'], a:'わが衣手は 露にぬれつつ', hint:'1番・天智天皇。秋の田の番小屋で、衣手（そで）が露にぬれる情景。15番と上の句の似た構造に注意。' },
+    { t:'2番 持統天皇', d:1, type:'c', q:'「春過ぎて 夏来にけらし 白妙の」の下の句は？', opts:['衣ほすてふ 天の香具山','富士の高嶺に 雪は降りつつ','声聞く時ぞ 秋は悲しき','わが衣手は 露にぬれつつ'], a:'衣ほすてふ 天の香具山', hint:'2番・持統天皇。「白妙の衣を干している」と聞く天の香具山。' },
+    { t:'3番 柿本人麻呂', d:1, type:'c', q:'「あしびきの 山鳥の尾の しだり尾の」の下の句は？', opts:['ながながし夜を ひとりかも寝む','人には告げよ あまの釣舟','乙女のすがた しばしとどめむ','声聞く時ぞ 秋は悲しき'], a:'ながながし夜を ひとりかも寝む', hint:'3番・柿本人麻呂。「あしびきの」は「山」にかかる枕詞。長い秋の夜を独り寝。' },
+    { t:'4番 山部赤人', d:1, type:'c', q:'「田子の浦に うち出でてみれば 白妙の」の下の句は？', opts:['富士の高嶺に 雪は降りつつ','わが衣手は 露にぬれつつ','衣ほすてふ 天の香具山','三笠の山に 出でし月かも'], a:'富士の高嶺に 雪は降りつつ', hint:'4番・山部赤人。田子の浦から見る雪化粧の富士山。' },
+    { t:'5番 猿丸大夫', d:1, type:'c', q:'「奥山に 紅葉踏みわけ 鳴く鹿の」の下の句は？', opts:['声聞く時ぞ 秋は悲しき','ながながし夜を ひとりかも寝む','白きを見れば 夜ぞふけにける','三笠の山に 出でし月かも'], a:'声聞く時ぞ 秋は悲しき', hint:'5番・猿丸大夫。秋の山中で鹿の鳴き声を聞き、もの悲しさを感じる。' },
+    { t:'6番 大伴家持', d:1, type:'c', q:'「かささぎの 渡せる橋に 置く霜の」の下の句は？', opts:['白きを見れば 夜ぞふけにける','人には告げよ あまの釣舟','乙女のすがた しばしとどめむ','恋ぞ積もりて 淵となりぬる'], a:'白きを見れば 夜ぞふけにける', hint:'6番・中納言家持（大伴家持）。「かささぎの渡せる橋」は宮中の階段の見立て、または七夕の天の川の橋。' },
+    { t:'7番 安倍仲麿', d:1, type:'c', q:'「天の原 ふりさけ見れば 春日なる」の下の句は？', opts:['三笠の山に 出でし月かも','富士の高嶺に 雪は降りつつ','人には告げよ あまの釣舟','白きを見れば 夜ぞふけにける'], a:'三笠の山に 出でし月かも', hint:'7番・安倍仲麿。中国（唐）にいるとき、故郷の春日にある三笠山に昇る月を思い出して詠んだ。' },
+    { t:'8番 喜撰法師', d:1, type:'c', q:'「わが庵は 都のたつみ しかぞすむ」の下の句は？', opts:['世をうぢ山と 人はいふなり','声聞く時ぞ 秋は悲しき','三笠の山に 出でし月かも','知るも知らぬも 逢坂の関'], a:'世をうぢ山と 人はいふなり', hint:'8番・喜撰法師。「うぢ山」と「憂し（憂世）」をかけたしゃれ。「たつみ」は東南の方角。' },
+    { t:'9番 小野小町', d:1, type:'c', q:'「花の色は うつりにけりな いたづらに」の下の句は？', opts:['わが身世にふる ながめせしまに','わが衣手は 露にぬれつつ','わが衣手に 雪は降りつつ','乱れそめにし われならなくに'], a:'わが身世にふる ながめせしまに', hint:'9番・小野小町。花の色（＝若さ・美しさ）が衰えていく嘆き。「ながめ」は「長雨」と「眺め」のかけことば。' },
+    { t:'10番 蝉丸', d:1, type:'c', q:'「これやこの 行くも帰るも 別れては」の下の句は？', opts:['知るも知らぬも 逢坂の関','人には告げよ あまの釣舟','乱れそめにし われならなくに','声聞く時ぞ 秋は悲しき'], a:'知るも知らぬも 逢坂の関', hint:'10番・蝉丸。逢坂の関は京都と滋賀の境。出会いと別れの場所。' },
+    { t:'11番 小野篁', d:1, type:'c', q:'「わたの原 八十島かけて 漕ぎ出でぬと」の下の句は？', opts:['人には告げよ あまの釣舟','三笠の山に 出でし月かも','乙女のすがた しばしとどめむ','白きを見れば 夜ぞふけにける'], a:'人には告げよ あまの釣舟', hint:'11番・参議篁（小野篁）。隠岐へ流される途中、別れた人々への伝言を漁師に託す歌。' },
+    { t:'12番 僧正遍昭', d:1, type:'c', q:'「天つ風 雲の通ひ路 吹きとぢよ」の下の句は？', opts:['乙女のすがた しばしとどめむ','人には告げよ あまの釣舟','ながながし夜を ひとりかも寝む','恋ぞ積もりて 淵となりぬる'], a:'乙女のすがた しばしとどめむ', hint:'12番・僧正遍昭。天女（乙女）を見ていたいので、雲の通り道を風で閉ざしてほしいという歌。' },
+    { t:'13番 陽成院', d:1, type:'c', q:'「筑波嶺の 峰より落つる 男女川（みなのがわ）」の下の句は？', opts:['恋ぞ積もりて 淵となりぬる','乱れそめにし われならなくに','声聞く時ぞ 秋は悲しき','人には告げよ あまの釣舟'], a:'恋ぞ積もりて 淵となりぬる', hint:'13番・陽成院。筑波山の男女川（みなのがわ）の流れが積もって淵になるように、恋心も積もる。' },
+    { t:'14番 源融', d:1, type:'c', q:'「陸奥の しのぶもぢずり 誰ゆゑに」の下の句は？', opts:['乱れそめにし われならなくに','わが身世にふる ながめせしまに','わが衣手は 露にぬれつつ','ながながし夜を ひとりかも寝む'], a:'乱れそめにし われならなくに', hint:'14番・河原左大臣（源融）。「しのぶもぢずり」は陸奥の乱れ模様の染め物。「あなたのせいで心が乱れたのに」。' },
+    { t:'15番 光孝天皇', d:1, type:'c', q:'「君がため 春の野に出でて 若菜つむ」の下の句は？', opts:['わが衣手に 雪は降りつつ','わが衣手は 露にぬれつつ','人には告げよ あまの釣舟','声聞く時ぞ 秋は悲しき'], a:'わが衣手に 雪は降りつつ', hint:'15番・光孝天皇。1番（露にぬれつつ）と紛らわしい！こちらは「雪は降りつつ」。「君がため」（あなたのために）若菜（早春のセリ・ナズナ等）を摘む。' },
 
     // 下の句 → 番号 or 上の句
-    { t:'下の句から', type:'c', q:'「人には告げよ あまの釣舟」の上の句は？', opts:['わたの原 八十島かけて 漕ぎ出でぬと','天の原 ふりさけ見れば 春日なる','これやこの 行くも帰るも 別れては','かささぎの 渡せる橋に 置く霜の'], a:'わたの原 八十島かけて 漕ぎ出でぬと', hint:'11番・小野篁。「わたの原」と「天の原」を混同しない（11番と7番）。' },
-    { t:'下の句から', type:'c', q:'「ながながし夜を ひとりかも寝む」の上の句は？', opts:['あしびきの 山鳥の尾の しだり尾の','奥山に 紅葉踏みわけ 鳴く鹿の','花の色は うつりにけりな いたづらに','陸奥の しのぶもぢずり 誰ゆゑに'], a:'あしびきの 山鳥の尾の しだり尾の', hint:'3番・柿本人麻呂。「しだり尾の」と「ながながし夜」が韻のように響く。' },
-    { t:'下の句から', type:'c', q:'「乱れそめにし われならなくに」の上の句は？', opts:['陸奥の しのぶもぢずり 誰ゆゑに','花の色は うつりにけりな いたづらに','筑波嶺の 峰より落つる 男女川','わが庵は 都のたつみ しかぞすむ'], a:'陸奥の しのぶもぢずり 誰ゆゑに', hint:'14番・源融。「私のせいではないのに（あなたのせいで）心が乱れた」。' },
+    { t:'下の句から', d:2, type:'c', q:'「人には告げよ あまの釣舟」の上の句は？', opts:['わたの原 八十島かけて 漕ぎ出でぬと','天の原 ふりさけ見れば 春日なる','これやこの 行くも帰るも 別れては','かささぎの 渡せる橋に 置く霜の'], a:'わたの原 八十島かけて 漕ぎ出でぬと', hint:'11番・小野篁。「わたの原」と「天の原」を混同しない（11番と7番）。' },
+    { t:'下の句から', d:2, type:'c', q:'「ながながし夜を ひとりかも寝む」の上の句は？', opts:['あしびきの 山鳥の尾の しだり尾の','奥山に 紅葉踏みわけ 鳴く鹿の','花の色は うつりにけりな いたづらに','陸奥の しのぶもぢずり 誰ゆゑに'], a:'あしびきの 山鳥の尾の しだり尾の', hint:'3番・柿本人麻呂。「しだり尾の」と「ながながし夜」が韻のように響く。' },
+    { t:'下の句から', d:2, type:'c', q:'「乱れそめにし われならなくに」の上の句は？', opts:['陸奥の しのぶもぢずり 誰ゆゑに','花の色は うつりにけりな いたづらに','筑波嶺の 峰より落つる 男女川','わが庵は 都のたつみ しかぞすむ'], a:'陸奥の しのぶもぢずり 誰ゆゑに', hint:'14番・源融。「私のせいではないのに（あなたのせいで）心が乱れた」。' },
 
     // 作者
-    { t:'作者', type:'c', q:'「秋の田の かりほの庵の 苫をあらみ…」の作者は？', opts:['天智天皇','持統天皇','光孝天皇','陽成院'], a:'天智天皇', hint:'1番・天智天皇。大化の改新で有名。' },
-    { t:'作者', type:'c', q:'「春過ぎて 夏来にけらし 白妙の…」の作者は？', opts:['天智天皇','持統天皇','小野小町','喜撰法師'], a:'持統天皇', hint:'2番・持統天皇。天智天皇の娘で、女性天皇。' },
-    { t:'作者', type:'c', q:'「花の色は うつりにけりな…」の作者は？', opts:['小野小町','持統天皇','僧正遍昭','蝉丸'], a:'小野小町', hint:'9番・小野小町。絶世の美女として伝わる女性歌人。' },
-    { t:'作者', type:'c', q:'「君がため 春の野に出でて 若菜つむ…」の作者は？', opts:['光孝天皇','天智天皇','陽成院','安倍仲麿'], a:'光孝天皇', hint:'15番・光孝天皇。1番との混同に注意。' },
-    { t:'作者', type:'c', q:'「天の原 ふりさけ見れば…」を詠んだのは？', opts:['安倍仲麿','柿本人麻呂','山部赤人','大伴家持'], a:'安倍仲麿', hint:'7番。遣唐使として中国に渡り、故郷を思って詠んだ。' },
-    { t:'作者', type:'c', q:'「これやこの 行くも帰るも…」の作者は？', opts:['蝉丸','僧正遍昭','喜撰法師','源融'], a:'蝉丸', hint:'10番・蝉丸。逢坂の関に住んだ伝説的人物。' },
-    { t:'作者', type:'c', q:'「あしびきの 山鳥の尾の…」の作者は？', opts:['柿本人麻呂','山部赤人','大伴家持','猿丸大夫'], a:'柿本人麻呂', hint:'3番。万葉集の代表的歌人。「歌聖」と称される。' },
-    { t:'作者', type:'c', q:'「田子の浦に うち出でてみれば…」の作者は？', opts:['山部赤人','柿本人麻呂','安倍仲麿','大伴家持'], a:'山部赤人', hint:'4番・山部赤人。柿本人麻呂とともに「歌聖」とされる。' },
-    { t:'作者', type:'c', q:'「奥山に 紅葉踏みわけ…」の作者は？', opts:['猿丸大夫','柿本人麻呂','源融','陽成院'], a:'猿丸大夫', hint:'5番・猿丸大夫。実在不明の伝説的歌人。' },
-    { t:'作者', type:'c', q:'「天つ風 雲の通ひ路…」の作者は？', opts:['僧正遍昭','喜撰法師','蝉丸','陽成院'], a:'僧正遍昭', hint:'12番・僧正遍昭。六歌仙の一人。' },
+    { t:'作者', d:2, type:'c', q:'「秋の田の かりほの庵の 苫をあらみ…」の作者は？', opts:['天智天皇','持統天皇','光孝天皇','陽成院'], a:'天智天皇', hint:'1番・天智天皇。大化の改新で有名。' },
+    { t:'作者', d:2, type:'c', q:'「春過ぎて 夏来にけらし 白妙の…」の作者は？', opts:['天智天皇','持統天皇','小野小町','喜撰法師'], a:'持統天皇', hint:'2番・持統天皇。天智天皇の娘で、女性天皇。' },
+    { t:'作者', d:2, type:'c', q:'「花の色は うつりにけりな…」の作者は？', opts:['小野小町','持統天皇','僧正遍昭','蝉丸'], a:'小野小町', hint:'9番・小野小町。絶世の美女として伝わる女性歌人。' },
+    { t:'作者', d:2, type:'c', q:'「君がため 春の野に出でて 若菜つむ…」の作者は？', opts:['光孝天皇','天智天皇','陽成院','安倍仲麿'], a:'光孝天皇', hint:'15番・光孝天皇。1番との混同に注意。' },
+    { t:'作者', d:2, type:'c', q:'「天の原 ふりさけ見れば…」を詠んだのは？', opts:['安倍仲麿','柿本人麻呂','山部赤人','大伴家持'], a:'安倍仲麿', hint:'7番。遣唐使として中国に渡り、故郷を思って詠んだ。' },
+    { t:'作者', d:2, type:'c', q:'「これやこの 行くも帰るも…」の作者は？', opts:['蝉丸','僧正遍昭','喜撰法師','源融'], a:'蝉丸', hint:'10番・蝉丸。逢坂の関に住んだ伝説的人物。' },
+    { t:'作者', d:2, type:'c', q:'「あしびきの 山鳥の尾の…」の作者は？', opts:['柿本人麻呂','山部赤人','大伴家持','猿丸大夫'], a:'柿本人麻呂', hint:'3番。万葉集の代表的歌人。「歌聖」と称される。' },
+    { t:'作者', d:2, type:'c', q:'「田子の浦に うち出でてみれば…」の作者は？', opts:['山部赤人','柿本人麻呂','安倍仲麿','大伴家持'], a:'山部赤人', hint:'4番・山部赤人。柿本人麻呂とともに「歌聖」とされる。' },
+    { t:'作者', d:2, type:'c', q:'「奥山に 紅葉踏みわけ…」の作者は？', opts:['猿丸大夫','柿本人麻呂','源融','陽成院'], a:'猿丸大夫', hint:'5番・猿丸大夫。実在不明の伝説的歌人。' },
+    { t:'作者', d:2, type:'c', q:'「天つ風 雲の通ひ路…」の作者は？', opts:['僧正遍昭','喜撰法師','蝉丸','陽成院'], a:'僧正遍昭', hint:'12番・僧正遍昭。六歌仙の一人。' },
 
     // 内容・枕詞・季節など
-    { t:'枕詞', type:'c', q:'「あしびきの」は次のどれにかかる枕詞？', opts:['山','海','空','花'], a:'山', hint:'「あしびきの山鳥」のように山にかかる。' },
-    { t:'枕詞', type:'c', q:'「白妙の」は主にどんなものにかかる枕詞？', opts:['衣・雪・雲など白いもの','花','風','月'], a:'衣・雪・雲など白いもの', hint:'白くて美しいもの全般。2番では「衣」、4番では「富士」にかかる。' },
-    { t:'季節', type:'c', q:'「春過ぎて 夏来にけらし 白妙の 衣ほすてふ 天の香具山」の季節は？', opts:['春','夏','秋','冬'], a:'夏', hint:'「夏来にけらし（夏が来たらしい）」とあるので夏。' },
-    { t:'季節', type:'c', q:'「奥山に 紅葉踏みわけ 鳴く鹿の…」の季節は？', opts:['春','夏','秋','冬'], a:'秋', hint:'紅葉（もみじ）と鹿の鳴き声 → 秋の歌。' },
-    { t:'紛らわしい歌', type:'c', q:'下の句が「わが衣手は 露にぬれつつ」と「わが衣手に 雪は降りつつ」。前者は1番だが、後者は何番？', opts:['15番（光孝天皇）','4番（山部赤人）','11番（小野篁）','9番（小野小町）'], a:'15番（光孝天皇）', hint:'4番も「雪は降りつつ」だが、上の句が「富士の高嶺に」。15番は「わが衣手に」が決め手。' },
+    { t:'枕詞', d:3, type:'c', q:'「あしびきの」は次のどれにかかる枕詞？', opts:['山','海','空','花'], a:'山', hint:'「あしびきの山鳥」のように山にかかる。' },
+    { t:'枕詞', d:3, type:'c', q:'「白妙の」は主にどんなものにかかる枕詞？', opts:['衣・雪・雲など白いもの','花','風','月'], a:'衣・雪・雲など白いもの', hint:'白くて美しいもの全般。2番では「衣」、4番では「富士」にかかる。' },
+    { t:'季節', d:3, type:'c', q:'「春過ぎて 夏来にけらし 白妙の 衣ほすてふ 天の香具山」の季節は？', opts:['春','夏','秋','冬'], a:'夏', hint:'「夏来にけらし（夏が来たらしい）」とあるので夏。' },
+    { t:'季節', d:3, type:'c', q:'「奥山に 紅葉踏みわけ 鳴く鹿の…」の季節は？', opts:['春','夏','秋','冬'], a:'秋', hint:'紅葉（もみじ）と鹿の鳴き声 → 秋の歌。' },
+    { t:'紛らわしい歌', d:3, type:'c', q:'下の句が「わが衣手は 露にぬれつつ」と「わが衣手に 雪は降りつつ」。前者は1番だが、後者は何番？', opts:['15番（光孝天皇）','4番（山部赤人）','11番（小野篁）','9番（小野小町）'], a:'15番（光孝天皇）', hint:'4番も「雪は降りつつ」だが、上の句が「富士の高嶺に」。15番は「わが衣手に」が決め手。' },
   ],
 
   science: [
     // 生物分野（教科書 p.10, 20-25 / 問題集 1章・2章 緑枠部分）
-    { t:'観察器具', type:'c', q:'ルーペを使うとき、観察するものが動かせるものなら、ルーペは何に近づけて持つ？', opts:['観察するもの','顔・目','机','光源'], a:'顔・目', hint:'ルーペは目に近づけて持ち、観察するものを前後に動かす。' },
-    { t:'観察器具', type:'c', q:'ルーペで観察するとき、太陽は？', opts:['見てもよい','直接見てはいけない','レンズを通して見る','曇りの日だけ見てよい'], a:'直接見てはいけない', hint:'目を傷めるので絶対に太陽を見ない。' },
-    { t:'観察器具', type:'i', q:'双眼実体顕微鏡では、観察するものを何倍に拡大して立体的に見ることができる？（〇〜〇倍）', a:['20〜40倍','20-40倍','20～40倍','20から40倍'], hint:'立体的に見えるのが特徴。' },
-    { t:'スケッチ', type:'c', q:'スケッチのしかたで「よい例」は？', opts:['かげをつけて立体的にかく','細い線と点ではっきりかく','色を塗ってリアルにかく','輪郭線を二重にかく'], a:'細い線と点ではっきりかく', hint:'よく削った鉛筆で、目的のものだけを細い線と点でかく。' },
-    { t:'身近な植物', type:'c', q:'日当たりがよく、乾いた場所に多く見られる植物は？', opts:['ドクダミ','ハルジオン','タンポポ','ゼニゴケ'], a:'タンポポ', hint:'タンポポ・シロツメクサ・オオバコなど。' },
-    { t:'身近な植物', type:'c', q:'日当たりが悪く、湿った場所に多く見られる植物は？', opts:['タンポポ','シロツメクサ','ドクダミ','スズメノカタビラ'], a:'ドクダミ', hint:'ドクダミ・ゼニゴケなどは湿った日かげに。' },
-    { t:'花のつくり', type:'i', q:'おしべの先端にあって、花粉が作られる袋状の部分は？', a:['やく','葯'], hint:'花粉はここで作られる。' },
-    { t:'花のつくり', type:'i', q:'めしべの先端のねばねばした、花粉がつく部分は？', a:['柱頭','ちゅうとう'], hint:'花粉がつくと受粉。' },
-    { t:'花のつくり', type:'i', q:'めしべのもとのふくらんだ部分の名前は？', a:['子房','しぼう'], hint:'中に胚珠がある。' },
-    { t:'花のつくり', type:'i', q:'子房の中にある小さな粒の名前は？', a:['胚珠','はいしゅ'], hint:'受粉後、種子になる。' },
-    { t:'花のつくり', type:'i', q:'花弁の外側にあり、つぼみのときに花を保護していた部分は？', a:['がく','ガク','萼'], hint:'花の一番外側。' },
-    { t:'花のつくり', type:'i', q:'受粉後、子房が成長してできるものは？', a:['果実','かじつ'], hint:'リンゴやミカンの食べる部分。' },
-    { t:'花のつくり', type:'i', q:'受粉後、胚珠が成長してできるものは？', a:['種子','しゅし'], hint:'植物が次世代を残す部分。' },
-    { t:'花のつくり', type:'c', q:'アブラナの花弁は1枚1枚はなれている。このような花を何という？', opts:['離弁花','合弁花','単性花','両性花'], a:'離弁花', hint:'サクラ、エンドウ、アブラナなど。' },
-    { t:'花のつくり', type:'c', q:'ツツジの花弁は1つにくっついている。このような花を何という？', opts:['離弁花','合弁花','単性花','両性花'], a:'合弁花', hint:'アサガオ、タンポポ、ツツジ。' },
-    { t:'種子植物', type:'c', q:'胚珠が子房の中にある植物は？', opts:['被子植物','裸子植物','シダ植物','コケ植物'], a:'被子植物', hint:'胚珠が「被」われている。' },
-    { t:'種子植物', type:'c', q:'子房がなく、胚珠がむき出しになっている植物は？', opts:['被子植物','裸子植物','シダ植物','藻類'], a:'裸子植物', hint:'マツ・スギ・イチョウ。果実ができない。' },
-    { t:'種子植物', type:'i', q:'裸子植物の例を1つカタカナで。', a:['マツ','スギ','イチョウ','ヒノキ','ソテツ','モミ'], hint:'マツ・スギ・イチョウ・ヒノキ・ソテツ・モミ。' },
-    { t:'種子植物', type:'c', q:'マツの花のうち、やがてまつかさになるのは？', opts:['雄花','雌花','どちらでもない','両方'], a:'雌花', hint:'2年前の雌花がまつかさに。' },
-    { t:'種子植物', type:'c', q:'マツの花粉は何によって運ばれる？', opts:['虫','風','水','鳥'], a:'風', hint:'風媒花。花粉に空気袋がついている。' },
+    { t:'観察器具', d:1, type:'c', q:'ルーペを使うとき、観察するものが動かせるものなら、ルーペは何に近づけて持つ？', opts:['観察するもの','顔・目','机','光源'], a:'顔・目', hint:'ルーペは目に近づけて持ち、観察するものを前後に動かす。' },
+    { t:'観察器具', d:1, type:'c', q:'ルーペで観察するとき、太陽は？', opts:['見てもよい','直接見てはいけない','レンズを通して見る','曇りの日だけ見てよい'], a:'直接見てはいけない', hint:'目を傷めるので絶対に太陽を見ない。' },
+    { t:'観察器具', d:1, type:'i', q:'双眼実体顕微鏡では、観察するものを何倍に拡大して立体的に見ることができる？（〇〜〇倍）', a:['20〜40倍','20-40倍','20～40倍','20から40倍'], hint:'立体的に見えるのが特徴。' },
+    { t:'スケッチ', d:1, type:'c', q:'スケッチのしかたで「よい例」は？', opts:['かげをつけて立体的にかく','細い線と点ではっきりかく','色を塗ってリアルにかく','輪郭線を二重にかく'], a:'細い線と点ではっきりかく', hint:'よく削った鉛筆で、目的のものだけを細い線と点でかく。' },
+    { t:'身近な植物', d:1, type:'c', q:'日当たりがよく、乾いた場所に多く見られる植物は？', opts:['ドクダミ','ハルジオン','タンポポ','ゼニゴケ'], a:'タンポポ', hint:'タンポポ・シロツメクサ・オオバコなど。' },
+    { t:'身近な植物', d:1, type:'c', q:'日当たりが悪く、湿った場所に多く見られる植物は？', opts:['タンポポ','シロツメクサ','ドクダミ','スズメノカタビラ'], a:'ドクダミ', hint:'ドクダミ・ゼニゴケなどは湿った日かげに。' },
+    { t:'花のつくり', d:1, type:'i', q:'おしべの先端にあって、花粉が作られる袋状の部分は？', a:['やく','葯'], hint:'花粉はここで作られる。' },
+    { t:'花のつくり', d:1, type:'i', q:'めしべの先端のねばねばした、花粉がつく部分は？', a:['柱頭','ちゅうとう'], hint:'花粉がつくと受粉。' },
+    { t:'花のつくり', d:1, type:'i', q:'めしべのもとのふくらんだ部分の名前は？', a:['子房','しぼう'], hint:'中に胚珠がある。' },
+    { t:'花のつくり', d:1, type:'i', q:'子房の中にある小さな粒の名前は？', a:['胚珠','はいしゅ'], hint:'受粉後、種子になる。' },
+    { t:'花のつくり', d:1, type:'i', q:'花弁の外側にあり、つぼみのときに花を保護していた部分は？', a:['がく','ガク','萼'], hint:'花の一番外側。' },
+    { t:'花のつくり', d:1, type:'i', q:'受粉後、子房が成長してできるものは？', a:['果実','かじつ'], hint:'リンゴやミカンの食べる部分。' },
+    { t:'花のつくり', d:1, type:'i', q:'受粉後、胚珠が成長してできるものは？', a:['種子','しゅし'], hint:'植物が次世代を残す部分。' },
+    { t:'花のつくり', d:1, type:'c', q:'アブラナの花弁は1枚1枚はなれている。このような花を何という？', opts:['離弁花','合弁花','単性花','両性花'], a:'離弁花', hint:'サクラ、エンドウ、アブラナなど。' },
+    { t:'花のつくり', d:1, type:'c', q:'ツツジの花弁は1つにくっついている。このような花を何という？', opts:['離弁花','合弁花','単性花','両性花'], a:'合弁花', hint:'アサガオ、タンポポ、ツツジ。' },
+    { t:'種子植物', d:2, type:'c', q:'胚珠が子房の中にある植物は？', opts:['被子植物','裸子植物','シダ植物','コケ植物'], a:'被子植物', hint:'胚珠が「被」われている。' },
+    { t:'種子植物', d:2, type:'c', q:'子房がなく、胚珠がむき出しになっている植物は？', opts:['被子植物','裸子植物','シダ植物','藻類'], a:'裸子植物', hint:'マツ・スギ・イチョウ。果実ができない。' },
+    { t:'種子植物', d:2, type:'i', q:'裸子植物の例を1つカタカナで。', a:['マツ','スギ','イチョウ','ヒノキ','ソテツ','モミ'], hint:'マツ・スギ・イチョウ・ヒノキ・ソテツ・モミ。' },
+    { t:'種子植物', d:2, type:'c', q:'マツの花のうち、やがてまつかさになるのは？', opts:['雄花','雌花','どちらでもない','両方'], a:'雌花', hint:'2年前の雌花がまつかさに。' },
+    { t:'種子植物', d:2, type:'c', q:'マツの花粉は何によって運ばれる？', opts:['虫','風','水','鳥'], a:'風', hint:'風媒花。花粉に空気袋がついている。' },
     // 物理・化学分野（教科書 p.136-147「物質のすがた」）
-    { t:'物質と物体', type:'c', q:'コップ・本・机のように、形のあるものを何という？', opts:['物体','物質','元素','分子'], a:'物体', hint:'物質を加工して形を与えたもの。' },
-    { t:'物質と物体', type:'c', q:'ガラス・木・プラスチックなど、ものを作っている材料を何という？', opts:['物体','物質','元素','原子'], a:'物質', hint:'物体を構成する材料。' },
-    { t:'有機物・無機物', type:'c', q:'砂糖・木・プラスチックなど、炭素を含み、燃えると二酸化炭素を出す物質は？', opts:['有機物','無機物','金属','合金'], a:'有機物', hint:'炭素を含む物質を有機物。' },
-    { t:'有機物・無機物', type:'c', q:'食塩・ガラス・鉄など、有機物以外の物質は？', opts:['有機物','無機物','元素','分子'], a:'無機物', hint:'食塩・ガラス・金属類は無機物。' },
-    { t:'金属', type:'c', q:'金属に共通する性質ではないものは？', opts:['電気をよく通す','熱をよく通す','磁石につく','光沢がある'], a:'磁石につく', hint:'磁石につくは鉄など一部のみ。共通性質ではない。' },
-    { t:'金属', type:'i', q:'金属の性質のひとつ、たたくと広がる性質を何という？', a:['展性','てんせい'], hint:'広がる：展性、伸びる：延性。' },
-    { t:'密度', type:'i', q:'密度を求める公式は？「密度＝〇〇÷〇〇」', a:['質量÷体積','質量/体積'], hint:'単位は g/cm³。' },
-    { t:'密度', type:'i', q:'質量54g、体積20cm³の物質の密度は？（単位なしで数字のみ）', a:['2.7','2.7g/cm3','2.7g/cm³'], hint:'54 ÷ 20 = 2.7。これはアルミニウム。' },
-    { t:'密度', type:'i', q:'体積10cm³、密度7.8g/cm³ の物質の質量は？（単位なしで数字のみ）', a:['78'], hint:'質量＝密度×体積。7.8×10=78。これは鉄。' },
-    { t:'ガスバーナー', type:'c', q:'ガスバーナーで青い炎にするには？', opts:['ガス調節ねじをさらに開く','空気調節ねじを開く','元栓を絞る','コックを閉じる'], a:'空気調節ねじを開く', hint:'オレンジ色の炎は空気不足。空気を入れて青く。' },
-    { t:'ガスバーナー', type:'c', q:'ガスバーナーの火を消す手順で正しいのは？', opts:['元栓→コック→空気→ガス','空気→ガス→コック→元栓','ガス→空気→コック→元栓','コック→元栓→ガス→空気'], a:'空気→ガス→コック→元栓', hint:'つけるときの逆の順。空気ねじ→ガスねじ→コック→元栓。' },
-    { t:'メスシリンダー', type:'c', q:'メスシリンダーの目盛りを読むときの正しい目線は？', opts:['液面より上','液面と水平','液面より下','どこでも可'], a:'液面と水平', hint:'液面の最も低いところ（凹面の底）を読む。' },
+    { t:'物質と物体', d:1, type:'c', q:'コップ・本・机のように、形のあるものを何という？', opts:['物体','物質','元素','分子'], a:'物体', hint:'物質を加工して形を与えたもの。' },
+    { t:'物質と物体', d:1, type:'c', q:'ガラス・木・プラスチックなど、ものを作っている材料を何という？', opts:['物体','物質','元素','原子'], a:'物質', hint:'物体を構成する材料。' },
+    { t:'有機物・無機物', d:2, type:'c', q:'砂糖・木・プラスチックなど、炭素を含み、燃えると二酸化炭素を出す物質は？', opts:['有機物','無機物','金属','合金'], a:'有機物', hint:'炭素を含む物質を有機物。' },
+    { t:'有機物・無機物', d:2, type:'c', q:'食塩・ガラス・鉄など、有機物以外の物質は？', opts:['有機物','無機物','元素','分子'], a:'無機物', hint:'食塩・ガラス・金属類は無機物。' },
+    { t:'金属', d:2, type:'c', q:'金属に共通する性質ではないものは？', opts:['電気をよく通す','熱をよく通す','磁石につく','光沢がある'], a:'磁石につく', hint:'磁石につくは鉄など一部のみ。共通性質ではない。' },
+    { t:'金属', d:2, type:'i', q:'金属の性質のひとつ、たたくと広がる性質を何という？', a:['展性','てんせい'], hint:'広がる：展性、伸びる：延性。' },
+    { t:'密度', d:1, type:'i', q:'密度を求める公式は？「密度＝〇〇÷〇〇」', a:['質量÷体積','質量/体積'], hint:'単位は g/cm³。' },
+    { t:'密度', d:3, type:'i', q:'質量54g、体積20cm³の物質の密度は？（単位なしで数字のみ）', a:['2.7','2.7g/cm3','2.7g/cm³'], hint:'54 ÷ 20 = 2.7。これはアルミニウム。' },
+    { t:'密度', d:3, type:'i', q:'体積10cm³、密度7.8g/cm³ の物質の質量は？（単位なしで数字のみ）', a:['78'], hint:'質量＝密度×体積。7.8×10=78。これは鉄。' },
+    { t:'ガスバーナー', d:2, type:'c', q:'ガスバーナーで青い炎にするには？', opts:['ガス調節ねじをさらに開く','空気調節ねじを開く','元栓を絞る','コックを閉じる'], a:'空気調節ねじを開く', hint:'オレンジ色の炎は空気不足。空気を入れて青く。' },
+    { t:'ガスバーナー', d:2, type:'c', q:'ガスバーナーの火を消す手順で正しいのは？', opts:['元栓→コック→空気→ガス','空気→ガス→コック→元栓','ガス→空気→コック→元栓','コック→元栓→ガス→空気'], a:'空気→ガス→コック→元栓', hint:'つけるときの逆の順。空気ねじ→ガスねじ→コック→元栓。' },
+    { t:'メスシリンダー', d:1, type:'c', q:'メスシリンダーの目盛りを読むときの正しい目線は？', opts:['液面より上','液面と水平','液面より下','どこでも可'], a:'液面と水平', hint:'液面の最も低いところ（凹面の底）を読む。' },,
+    // ===== 追加：花のつくり（イラスト問題含む） =====
+    { t:'花のつくり', d:1, type:'i', q:'花を構成する4つの部分のうち、最も外側にあるのは？', a:['がく'], hint:'がく→花弁→おしべ→めしべ、の順で内側へ。' },
+    { t:'花のつくり', d:1, type:'c', q:'右の図で「ア」は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['柱頭','花弁','がく','子房'], a:'柱頭', hint:'めしべの先端のねばねばした部分。' },
+    { t:'花のつくり', d:1, type:'c', q:'右の図で「イ」は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['花弁','がく','おしべ','子房'], a:'花弁', hint:'色とりどりで虫を引き寄せる。' },
+    { t:'花のつくり', d:2, type:'c', q:'右の図で「ウ」（茶色の楕円）は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['花粉','やく','めしべ','胚珠'], a:'やく', hint:'おしべの先端で花粉が作られる袋状の部分。' },
+    { t:'花のつくり', d:1, type:'c', q:'右の図で「エ」（大きなふくらみ）は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['子房','胚珠','やく','がく'], a:'子房', hint:'めしべのもとのふくらんだ部分。' },
+    { t:'花のつくり', d:2, type:'c', q:'右の図で「オ」（中の小さな粒）は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['花粉','胚珠','種子','卵'], a:'胚珠', hint:'子房の中にある小さな粒。受粉後に種子になる。' },
+    { t:'花のつくり', d:1, type:'c', q:'右の図で「カ」（外側の緑色の部分）は何の部分？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- アブラナの花の縦断面 --> <!-- 茎 --> <rect x="172" y="200" width="16" height="36" fill="#7BCB6B"/> <!-- がく --> <path d="M 130 200 Q 180 215 230 200 L 220 188 Q 180 196 140 188 Z" fill="#9BD984" stroke="#5BA547" stroke-width="1.5"/> <!-- 花弁 --> <path d="M 75 130 Q 60 90 110 70 Q 140 60 165 95 Q 180 85 195 95 Q 220 60 250 70 Q 300 90 285 130 Q 290 165 250 175 Q 220 195 195 175 Q 180 185 165 175 Q 140 195 110 175 Q 70 165 75 130 Z" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <!-- おしべ × 4 --> <g stroke="#8B6332" stroke-width="1.5" fill="none"> <line x1="140" y1="155" x2="135" y2="105"/> <line x1="155" y1="155" x2="150" y2="100"/> <line x1="210" y1="155" x2="215" y2="100"/> <line x1="225" y1="155" x2="230" y2="105"/> </g> <ellipse cx="135" cy="100" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="150" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="215" cy="95" rx="7" ry="9" fill="#8B6332"/> <ellipse cx="230" cy="100" rx="7" ry="9" fill="#8B6332"/> <!-- めしべ --> <!-- 子房 --> <ellipse cx="180" cy="175" rx="22" ry="20" fill="#A8E89B" stroke="#5BA547" stroke-width="1.5"/> <!-- 胚珠（粒）×3 --> <circle cx="172" cy="173" r="3.5" fill="#F58A4A"/> <circle cx="183" cy="170" r="3.5" fill="#F58A4A"/> <circle cx="187" cy="180" r="3.5" fill="#F58A4A"/> <!-- 花柱 --> <rect x="177" y="115" width="6" height="55" fill="#7BCB6B"/> <!-- 柱頭 --> <ellipse cx="180" cy="112" rx="11" ry="7" fill="#FFA9C9" stroke="#D26B96" stroke-width="1.2"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 柱頭 --> <line x1="180" y1="112" x2="180" y2="50" class="label-line"/> <circle cx="180" cy="112" r="3" class="label-dot"/> <text x="180" y="44" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 花弁 --> <line x1="100" y1="105" x2="55" y2="60" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="45" y="54" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: おしべ（やく） --> <line x1="135" y1="100" x2="80" y2="135" class="label-line"/> <circle cx="135" cy="100" r="3" class="label-dot"/> <text x="55" y="142" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 子房 --> <line x1="200" y1="175" x2="305" y2="180" class="label-line"/> <circle cx="200" cy="175" r="3" class="label-dot"/> <text x="320" y="184" text-anchor="middle" class="label-pin">エ</text> <!-- オ: 胚珠 --> <line x1="183" y1="170" x2="310" y2="125" class="label-line"/> <circle cx="183" cy="170" r="3" class="label-dot"/> <text x="325" y="130" text-anchor="middle" class="label-pin">オ</text> <!-- カ: がく --> <line x1="220" y1="202" x2="305" y2="225" class="label-line"/> <circle cx="220" cy="202" r="3" class="label-dot"/> <text x="320" y="232" text-anchor="middle" class="label-pin">カ</text> </g> </svg>', opts:['花弁','がく','子房','葉'], a:'がく', hint:'つぼみのときに花を保護していた部分。' },
+    { t:'花のつくり', d:2, type:'i', q:'花粉がめしべの柱頭に付くことを何という？', a:['受粉'], hint:'受粉によって種子のもとになる胚珠が成長を始める。' },
+    { t:'花のつくり', d:2, type:'c', q:'おしべの本数が「6本」が一般的な花は次のうちどれ？', opts:['アブラナ','エンドウ','タンポポ','ユリ'], a:'アブラナ', hint:'アブラナは外側2本+内側4本の計6本。' },
+    // ===== 追加：種子植物 =====
+    { t:'種子植物', d:1, type:'c', q:'右の図で「ア」（種子の大部分を占める黄色い部分）は何？', svg:'<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg"> <!-- 種子の半切（インゲンマメ風） --> <ellipse cx="180" cy="110" rx="120" ry="80" fill="#F5E0C0" stroke="#A67833" stroke-width="2"/> <!-- 子葉 --> <path d="M 80 110 Q 110 70 180 75 Q 220 75 250 110 Q 245 145 220 155 Q 180 155 140 150 Q 95 145 80 110 Z" fill="#FFE7AA" stroke="#C0903F" stroke-width="1.5"/> <!-- 胚軸（中央） --> <ellipse cx="180" cy="125" rx="14" ry="38" fill="#E0E8C5" stroke="#739545" stroke-width="1.5"/> <!-- 胚芽（上部） --> <path d="M 175 100 Q 180 78 185 100 Z" fill="#5BA547"/> <!-- 幼根（下部、種子の外に少し出る形） --> <path d="M 180 160 Q 180 175 175 195 M 180 160 Q 180 175 185 195" stroke="#8B6332" stroke-width="2.5" fill="none"/> <ellipse cx="180" cy="160" rx="7" ry="6" fill="#C5D88F" stroke="#739545" stroke-width="1"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 子葉 --> <line x1="100" y1="105" x2="40" y2="50" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="30" y="45" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 胚芽 --> <line x1="180" y1="92" x2="280" y2="45" class="label-line"/> <circle cx="180" cy="92" r="3" class="label-dot"/> <text x="295" y="50" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: 胚軸 --> <line x1="195" y1="125" x2="320" y2="120" class="label-line"/> <circle cx="195" cy="125" r="3" class="label-dot"/> <text x="335" y="124" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 幼根 --> <line x1="180" y1="185" x2="300" y2="195" class="label-line"/> <circle cx="180" cy="185" r="3" class="label-dot"/> <text x="315" y="200" text-anchor="middle" class="label-pin">エ</text> </g> </svg>', opts:['子葉','胚芽','胚軸','幼根'], a:'子葉', hint:'発芽したときに最初の葉になる部分。栄養を蓄えている。' },
+    { t:'種子植物', d:2, type:'c', q:'右の図で「イ」（種子の中央上部、緑色の小さい部分）は何？', svg:'<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg"> <!-- 種子の半切（インゲンマメ風） --> <ellipse cx="180" cy="110" rx="120" ry="80" fill="#F5E0C0" stroke="#A67833" stroke-width="2"/> <!-- 子葉 --> <path d="M 80 110 Q 110 70 180 75 Q 220 75 250 110 Q 245 145 220 155 Q 180 155 140 150 Q 95 145 80 110 Z" fill="#FFE7AA" stroke="#C0903F" stroke-width="1.5"/> <!-- 胚軸（中央） --> <ellipse cx="180" cy="125" rx="14" ry="38" fill="#E0E8C5" stroke="#739545" stroke-width="1.5"/> <!-- 胚芽（上部） --> <path d="M 175 100 Q 180 78 185 100 Z" fill="#5BA547"/> <!-- 幼根（下部、種子の外に少し出る形） --> <path d="M 180 160 Q 180 175 175 195 M 180 160 Q 180 175 185 195" stroke="#8B6332" stroke-width="2.5" fill="none"/> <ellipse cx="180" cy="160" rx="7" ry="6" fill="#C5D88F" stroke="#739545" stroke-width="1"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 子葉 --> <line x1="100" y1="105" x2="40" y2="50" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="30" y="45" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 胚芽 --> <line x1="180" y1="92" x2="280" y2="45" class="label-line"/> <circle cx="180" cy="92" r="3" class="label-dot"/> <text x="295" y="50" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: 胚軸 --> <line x1="195" y1="125" x2="320" y2="120" class="label-line"/> <circle cx="195" cy="125" r="3" class="label-dot"/> <text x="335" y="124" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 幼根 --> <line x1="180" y1="185" x2="300" y2="195" class="label-line"/> <circle cx="180" cy="185" r="3" class="label-dot"/> <text x="315" y="200" text-anchor="middle" class="label-pin">エ</text> </g> </svg>', opts:['胚芽','子葉','胚軸','幼根'], a:'胚芽', hint:'発芽したときに茎や葉になる部分。' },
+    { t:'種子植物', d:2, type:'c', q:'右の図で「ウ」（緑色の細長い部分）は何？', svg:'<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg"> <!-- 種子の半切（インゲンマメ風） --> <ellipse cx="180" cy="110" rx="120" ry="80" fill="#F5E0C0" stroke="#A67833" stroke-width="2"/> <!-- 子葉 --> <path d="M 80 110 Q 110 70 180 75 Q 220 75 250 110 Q 245 145 220 155 Q 180 155 140 150 Q 95 145 80 110 Z" fill="#FFE7AA" stroke="#C0903F" stroke-width="1.5"/> <!-- 胚軸（中央） --> <ellipse cx="180" cy="125" rx="14" ry="38" fill="#E0E8C5" stroke="#739545" stroke-width="1.5"/> <!-- 胚芽（上部） --> <path d="M 175 100 Q 180 78 185 100 Z" fill="#5BA547"/> <!-- 幼根（下部、種子の外に少し出る形） --> <path d="M 180 160 Q 180 175 175 195 M 180 160 Q 180 175 185 195" stroke="#8B6332" stroke-width="2.5" fill="none"/> <ellipse cx="180" cy="160" rx="7" ry="6" fill="#C5D88F" stroke="#739545" stroke-width="1"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 子葉 --> <line x1="100" y1="105" x2="40" y2="50" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="30" y="45" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 胚芽 --> <line x1="180" y1="92" x2="280" y2="45" class="label-line"/> <circle cx="180" cy="92" r="3" class="label-dot"/> <text x="295" y="50" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: 胚軸 --> <line x1="195" y1="125" x2="320" y2="120" class="label-line"/> <circle cx="195" cy="125" r="3" class="label-dot"/> <text x="335" y="124" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 幼根 --> <line x1="180" y1="185" x2="300" y2="195" class="label-line"/> <circle cx="180" cy="185" r="3" class="label-dot"/> <text x="315" y="200" text-anchor="middle" class="label-pin">エ</text> </g> </svg>', opts:['胚軸','胚芽','幼根','茎'], a:'胚軸', hint:'胚芽と幼根をつなぐ部分で、のちに茎になる。' },
+    { t:'種子植物', d:1, type:'c', q:'右の図で「エ」（下に伸びる細い部分）は何？', svg:'<svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg"> <!-- 種子の半切（インゲンマメ風） --> <ellipse cx="180" cy="110" rx="120" ry="80" fill="#F5E0C0" stroke="#A67833" stroke-width="2"/> <!-- 子葉 --> <path d="M 80 110 Q 110 70 180 75 Q 220 75 250 110 Q 245 145 220 155 Q 180 155 140 150 Q 95 145 80 110 Z" fill="#FFE7AA" stroke="#C0903F" stroke-width="1.5"/> <!-- 胚軸（中央） --> <ellipse cx="180" cy="125" rx="14" ry="38" fill="#E0E8C5" stroke="#739545" stroke-width="1.5"/> <!-- 胚芽（上部） --> <path d="M 175 100 Q 180 78 185 100 Z" fill="#5BA547"/> <!-- 幼根（下部、種子の外に少し出る形） --> <path d="M 180 160 Q 180 175 175 195 M 180 160 Q 180 175 185 195" stroke="#8B6332" stroke-width="2.5" fill="none"/> <ellipse cx="180" cy="160" rx="7" ry="6" fill="#C5D88F" stroke="#739545" stroke-width="1"/> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <!-- ア: 子葉 --> <line x1="100" y1="105" x2="40" y2="50" class="label-line"/> <circle cx="100" cy="105" r="3" class="label-dot"/> <text x="30" y="45" text-anchor="middle" class="label-pin">ア</text> <!-- イ: 胚芽 --> <line x1="180" y1="92" x2="280" y2="45" class="label-line"/> <circle cx="180" cy="92" r="3" class="label-dot"/> <text x="295" y="50" text-anchor="middle" class="label-pin">イ</text> <!-- ウ: 胚軸 --> <line x1="195" y1="125" x2="320" y2="120" class="label-line"/> <circle cx="195" cy="125" r="3" class="label-dot"/> <text x="335" y="124" text-anchor="middle" class="label-pin">ウ</text> <!-- エ: 幼根 --> <line x1="180" y1="185" x2="300" y2="195" class="label-line"/> <circle cx="180" cy="185" r="3" class="label-dot"/> <text x="315" y="200" text-anchor="middle" class="label-pin">エ</text> </g> </svg>', opts:['幼根','胚芽','子葉','茎'], a:'幼根', hint:'発芽したときに最初に下に伸びる、根になる部分。' },
+    { t:'種子植物', d:2, type:'c', q:'右の図で「ア」（雌花）は受粉後に何になる？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- 枝 --> <line x1="40" y1="200" x2="320" y2="200" stroke="#6B4226" stroke-width="6" stroke-linecap="round"/> <!-- 雌花（紫色のまつかさになる方）枝の先端 --> <g> <ellipse cx="280" cy="155" rx="22" ry="38" fill="#8B5CF6" stroke="#5B3CB6" stroke-width="1.5"/> <g fill="#6B3CB6"> <ellipse cx="270" cy="135" rx="5" ry="3"/> <ellipse cx="288" cy="142" rx="5" ry="3"/> <ellipse cx="270" cy="155" rx="5" ry="3"/> <ellipse cx="290" cy="165" rx="5" ry="3"/> <ellipse cx="270" cy="178" rx="5" ry="3"/> </g> <line x1="280" y1="195" x2="280" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- 雄花（黄色っぽい、花粉を出す方）枝の下方 --> <g> <ellipse cx="100" cy="160" rx="18" ry="30" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <g fill="#D9A82F"> <ellipse cx="92" cy="145" rx="4" ry="3"/> <ellipse cx="108" cy="150" rx="4" ry="3"/> <ellipse cx="92" cy="160" rx="4" ry="3"/> <ellipse cx="108" cy="170" rx="4" ry="3"/> <ellipse cx="92" cy="180" rx="4" ry="3"/> </g> <line x1="100" y1="190" x2="100" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- もう1つ雄花 --> <g> <ellipse cx="160" cy="170" rx="16" ry="25" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <line x1="160" y1="195" x2="160" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <line x1="280" y1="120" x2="280" y2="40" class="label-line"/> <circle cx="280" cy="120" r="3" class="label-dot"/> <text x="280" y="32" text-anchor="middle" class="label-pin">ア</text> <line x1="100" y1="130" x2="60" y2="40" class="label-line"/> <circle cx="100" cy="130" r="3" class="label-dot"/> <text x="50" y="32" text-anchor="middle" class="label-pin">イ</text> </g> </svg>', opts:['まつかさ','種子','花粉','枯れて落ちる'], a:'まつかさ', hint:'雌花が成長してまつかさ（球果）になる。' },
+    { t:'種子植物', d:2, type:'c', q:'右の図で「イ」（黄色い花）の役割は？', svg:'<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg"> <!-- 枝 --> <line x1="40" y1="200" x2="320" y2="200" stroke="#6B4226" stroke-width="6" stroke-linecap="round"/> <!-- 雌花（紫色のまつかさになる方）枝の先端 --> <g> <ellipse cx="280" cy="155" rx="22" ry="38" fill="#8B5CF6" stroke="#5B3CB6" stroke-width="1.5"/> <g fill="#6B3CB6"> <ellipse cx="270" cy="135" rx="5" ry="3"/> <ellipse cx="288" cy="142" rx="5" ry="3"/> <ellipse cx="270" cy="155" rx="5" ry="3"/> <ellipse cx="290" cy="165" rx="5" ry="3"/> <ellipse cx="270" cy="178" rx="5" ry="3"/> </g> <line x1="280" y1="195" x2="280" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- 雄花（黄色っぽい、花粉を出す方）枝の下方 --> <g> <ellipse cx="100" cy="160" rx="18" ry="30" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <g fill="#D9A82F"> <ellipse cx="92" cy="145" rx="4" ry="3"/> <ellipse cx="108" cy="150" rx="4" ry="3"/> <ellipse cx="92" cy="160" rx="4" ry="3"/> <ellipse cx="108" cy="170" rx="4" ry="3"/> <ellipse cx="92" cy="180" rx="4" ry="3"/> </g> <line x1="100" y1="190" x2="100" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- もう1つ雄花 --> <g> <ellipse cx="160" cy="170" rx="16" ry="25" fill="#FFD964" stroke="#D9A82F" stroke-width="1.5"/> <line x1="160" y1="195" x2="160" y2="200" stroke="#6B4226" stroke-width="3"/> </g> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <line x1="280" y1="120" x2="280" y2="40" class="label-line"/> <circle cx="280" cy="120" r="3" class="label-dot"/> <text x="280" y="32" text-anchor="middle" class="label-pin">ア</text> <line x1="100" y1="130" x2="60" y2="40" class="label-line"/> <circle cx="100" cy="130" r="3" class="label-dot"/> <text x="50" y="32" text-anchor="middle" class="label-pin">イ</text> </g> </svg>', opts:['花粉を出す','種子を作る','光合成','水分を出す'], a:'花粉を出す', hint:'雄花は花粉を作り、風で雌花に運ばれる。' },
+    { t:'種子植物', d:2, type:'i', q:'裸子植物の例をもう1つカタカナで（マツ以外）。', a:['イチョウ','スギ','ヒノキ','ソテツ'], hint:'裸子植物の代表：マツ・スギ・ヒノキ・イチョウ・ソテツ。' },
+    { t:'種子植物', d:2, type:'c', q:'被子植物の例として正しいものは？', opts:['マツ','イチョウ','タンポポ','スギ'], a:'タンポポ', hint:'マツ・イチョウ・スギは裸子植物。' },
+    // ===== 追加：身近な植物 =====
+    { t:'身近な植物', d:1, type:'i', q:'タンポポはどんな場所に多く見られる？日当たりが（　　）、（　　）た場所。', a:['よく乾い','よく、乾い'], hint:'タンポポは乾いた日当たりの良い場所を好む。' },
+    { t:'身近な植物', d:1, type:'c', q:'ドクダミは次のうちどんな場所に多い？', opts:['日当たりがよく乾いた場所','日当たりが悪く湿った場所','水中','砂漠'], a:'日当たりが悪く湿った場所', hint:'ドクダミ・ゼニゴケなどは日陰の湿った場所を好む。' },
+    // ===== 追加：観察器具・スケッチ =====
+    { t:'観察器具', d:1, type:'c', q:'ルーペで動かせないもの（壁や地面）を観察するときの正しい使い方は？', opts:['ルーペを目から離して持つ','ルーペを目に近づけ、顔ごと動かして観察する','ものを動かして観察する','片目をつぶる'], a:'ルーペを目に近づけ、顔ごと動かして観察する', hint:'動かせないときはルーペを目に固定し、自分が動く。' },
+    { t:'スケッチ', d:1, type:'c', q:'理科のスケッチで「悪い例」はどれ？', opts:['線を1本ですっきり描く','輪郭を細い線でていねいに描く','陰影をつけずに描く','色鉛筆でカラフルに塗りつぶす'], a:'色鉛筆でカラフルに塗りつぶす', hint:'スケッチは細い線で輪郭をはっきり、陰影や塗りつぶしはしない。' },
+    { t:'観察器具', d:2, type:'c', q:'双眼実体顕微鏡の特徴として正しいのは？', opts:['像が上下左右逆に見える','片目で観察する','プレパラートを作る必要がある','立体的に観察できる'], a:'立体的に観察できる', hint:'両目で見るので立体感がある。プレパラートは不要。' },
+    // ===== 追加：物質と物体・有機物・無機物 =====
+    { t:'物質と物体', d:1, type:'c', q:'次のうち「物体」はどれ？', opts:['鉄','ガラス','コップ','プラスチック'], a:'コップ', hint:'コップは形のあるもの＝物体。鉄・ガラス・プラスチックは材料＝物質。' },
+    { t:'物質と物体', d:1, type:'c', q:'次のうち「物質」はどれ？', opts:['本','机','コップ','木'], a:'木', hint:'物質はもの作る材料。本・机・コップは形のある物体。' },
+    { t:'有機物・無機物', d:2, type:'c', q:'有機物の特徴として正しいのは？', opts:['必ず燃えない','燃えると二酸化炭素を出す','金属でできている','水に溶けない'], a:'燃えると二酸化炭素を出す', hint:'炭素を含むので燃えるとCO₂が発生。' },
+    { t:'有機物・無機物', d:2, type:'c', q:'次のうち有機物はどれ？', opts:['食塩','鉄','砂糖','ガラス'], a:'砂糖', hint:'砂糖・デンプン・プラスチック・木などが有機物。' },
+    { t:'有機物・無機物', d:2, type:'c', q:'紙やプラスチックを燃やすと出る、石灰水を白くにごらせる気体は？', opts:['酸素','水素','二酸化炭素','窒素'], a:'二酸化炭素', hint:'有機物が燃えるとCO₂が出る。石灰水でCO₂を検出。' },
+    // ===== 追加：金属 =====
+    { t:'金属', d:1, type:'i', q:'金属の性質のひとつ、引っぱると延びる性質を何という？', a:['延性'], hint:'たたくと広がる＝展性、引っぱって延びる＝延性。' },
+    { t:'金属', d:2, type:'c', q:'金属に共通する性質として正しくないのは？', opts:['電気を通す','磁石にくっつく','たたくと広がる','金属光沢がある'], a:'磁石にくっつく', hint:'磁石につくのは鉄・ニッケル・コバルトなど一部だけ。共通の性質ではない。' },
+    // ===== 追加：密度 =====
+    { t:'密度', d:2, type:'i', q:'体積30cm³、質量81gの物質の密度は？（単位なし、数字のみ）', a:['2.7'], hint:'密度=質量÷体積。81÷30=2.7（アルミニウム）。' },
+    { t:'密度', d:2, type:'i', q:'密度1.0g/cm³の水に、密度0.92g/cm³の氷を入れるとどうなる？「浮く」「沈む」で答えなさい。', a:['浮く'], hint:'密度が水より小さいものは浮く。' },
+    { t:'密度', d:3, type:'i', q:'同じ体積の鉄（密度7.9）と銅（密度8.9）。質量が重いのはどっち？「鉄」または「銅」で答えなさい。', a:['銅'], hint:'同体積なら密度が大きい方が重い。' },
+    { t:'密度', d:3, type:'i', q:'質量120g、体積40cm³の金属の密度は？（単位なし、数字のみ）', a:['3'], hint:'120÷40=3。' },
+    // ===== 追加：ガスバーナー =====
+    { t:'ガスバーナー', d:2, type:'c', q:'右の図のガスバーナーで「ア」（上のねじ）の役割は？', svg:'<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg"> <!-- 炎 --> <ellipse cx="180" cy="35" rx="14" ry="35" fill="#5DB0FF" opacity="0.6"/> <ellipse cx="180" cy="55" rx="10" ry="25" fill="#3D90FF" opacity="0.8"/> <!-- 筒上部 --> <rect x="170" y="80" width="20" height="60" fill="#8C8C8C" stroke="#555" stroke-width="1.5"/> <!-- ねじ上（空気） --> <circle cx="180" cy="155" r="18" fill="#FFC107" stroke="#7A5400" stroke-width="1.5"/> <text x="180" y="160" text-anchor="middle" font-size="10" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#3A2400">空気</text> <!-- ねじ下（ガス） --> <circle cx="180" cy="195" r="18" fill="#FF7043" stroke="#7A2A00" stroke-width="1.5"/> <text x="180" y="200" text-anchor="middle" font-size="10" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#3A0F00">ガス</text> <!-- 台座 --> <ellipse cx="180" cy="235" rx="60" ry="12" fill="#666"/> <rect x="120" y="218" width="120" height="18" fill="#888" stroke="#555" stroke-width="1.5"/> <!-- 元栓ハンドル（左下） --> <line x1="60" y1="245" x2="100" y2="235" stroke="#444" stroke-width="3"/> <circle cx="55" cy="246" r="10" fill="#B5651D" stroke="#5A2A00" stroke-width="1.5"/> <text x="55" y="250" text-anchor="middle" font-size="9" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#fff">元栓</text> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <line x1="198" y1="155" x2="290" y2="135" class="label-line"/> <circle cx="198" cy="155" r="3" class="label-dot"/> <text x="305" y="140" text-anchor="middle" class="label-pin">ア</text> <line x1="198" y1="195" x2="290" y2="195" class="label-line"/> <circle cx="198" cy="195" r="3" class="label-dot"/> <text x="305" y="200" text-anchor="middle" class="label-pin">イ</text> <line x1="55" y1="236" x2="70" y2="190" class="label-line"/> <circle cx="55" cy="236" r="3" class="label-dot"/> <text x="65" y="180" text-anchor="middle" class="label-pin">ウ</text> </g> </svg>', opts:['空気の量を調節','ガスの量を調節','火を消す','点火する'], a:'空気の量を調節', hint:'上が空気、下がガス。覚え方：「上の空気」。' },
+    { t:'ガスバーナー', d:2, type:'c', q:'右の図のガスバーナーで「イ」（下のねじ）の役割は？', svg:'<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg"> <!-- 炎 --> <ellipse cx="180" cy="35" rx="14" ry="35" fill="#5DB0FF" opacity="0.6"/> <ellipse cx="180" cy="55" rx="10" ry="25" fill="#3D90FF" opacity="0.8"/> <!-- 筒上部 --> <rect x="170" y="80" width="20" height="60" fill="#8C8C8C" stroke="#555" stroke-width="1.5"/> <!-- ねじ上（空気） --> <circle cx="180" cy="155" r="18" fill="#FFC107" stroke="#7A5400" stroke-width="1.5"/> <text x="180" y="160" text-anchor="middle" font-size="10" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#3A2400">空気</text> <!-- ねじ下（ガス） --> <circle cx="180" cy="195" r="18" fill="#FF7043" stroke="#7A2A00" stroke-width="1.5"/> <text x="180" y="200" text-anchor="middle" font-size="10" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#3A0F00">ガス</text> <!-- 台座 --> <ellipse cx="180" cy="235" rx="60" ry="12" fill="#666"/> <rect x="120" y="218" width="120" height="18" fill="#888" stroke="#555" stroke-width="1.5"/> <!-- 元栓ハンドル（左下） --> <line x1="60" y1="245" x2="100" y2="235" stroke="#444" stroke-width="3"/> <circle cx="55" cy="246" r="10" fill="#B5651D" stroke="#5A2A00" stroke-width="1.5"/> <text x="55" y="250" text-anchor="middle" font-size="9" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#fff">元栓</text> <!-- ラベル --> <g font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif"> <line x1="198" y1="155" x2="290" y2="135" class="label-line"/> <circle cx="198" cy="155" r="3" class="label-dot"/> <text x="305" y="140" text-anchor="middle" class="label-pin">ア</text> <line x1="198" y1="195" x2="290" y2="195" class="label-line"/> <circle cx="198" cy="195" r="3" class="label-dot"/> <text x="305" y="200" text-anchor="middle" class="label-pin">イ</text> <line x1="55" y1="236" x2="70" y2="190" class="label-line"/> <circle cx="55" cy="236" r="3" class="label-dot"/> <text x="65" y="180" text-anchor="middle" class="label-pin">ウ</text> </g> </svg>', opts:['空気の量を調節','ガスの量を調節','火を消す','水を入れる'], a:'ガスの量を調節', hint:'下のねじがガス調節ねじ。' },
+    { t:'ガスバーナー', d:2, type:'c', q:'ガスバーナーの火をつける手順で、最初にすることは？', opts:['空気ねじを開ける','ガスねじを開ける','元栓・コックを開ける','マッチに火をつける'], a:'マッチに火をつける', hint:'順番：マッチ→元栓→コック→ガスねじ→空気ねじ、で青い炎に。' },
+    { t:'ガスバーナー', d:3, type:'c', q:'炎が赤いとき（不完全燃焼）、どうすればよい？', opts:['ガスねじを閉める','空気ねじを開けて空気を増やす','元栓を閉める','水をかける'], a:'空気ねじを開けて空気を増やす', hint:'赤い炎＝空気不足。空気ねじを開けて青い炎にする。' },
+    // ===== 追加：メスシリンダー =====
+    { t:'メスシリンダー', d:1, type:'c', q:'右の図のメスシリンダーで、目盛りを読むときの正しい目線は？', svg:'<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg"> <!-- シリンダー --> <rect x="120" y="40" width="120" height="190" rx="6" ry="6" fill="#E8F4FB" stroke="#5BA8D9" stroke-width="2"/> <!-- 注ぎ口 --> <path d="M 120 40 L 105 30 L 130 30 Z" fill="#E8F4FB" stroke="#5BA8D9" stroke-width="2"/> <!-- 水（液面はわずかに凹型） --> <path d="M 122 130 Q 180 140 238 130 L 238 228 L 122 228 Z" fill="#A5D8F7" opacity="0.8"/> <!-- 凹型曲線（液面）強調 --> <path d="M 122 130 Q 180 142 238 130" stroke="#3E8FC1" stroke-width="2" fill="none"/> <!-- 目盛り --> <g stroke="#444" stroke-width="1"> <line x1="120" y1="60" x2="135" y2="60"/> <line x1="120" y1="85" x2="130" y2="85"/> <line x1="120" y1="110" x2="135" y2="110"/> <line x1="120" y1="135" x2="130" y2="135"/> <line x1="120" y1="160" x2="135" y2="160"/> <line x1="120" y1="185" x2="130" y2="185"/> <line x1="120" y1="210" x2="135" y2="210"/> </g> <g font-size="10" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" fill="#444"> <text x="118" y="63" text-anchor="end">50</text> <text x="118" y="113" text-anchor="end">40</text> <text x="118" y="163" text-anchor="end">30</text> <text x="118" y="213" text-anchor="end">20</text> </g> <!-- 目線の矢印 --> <!-- ア: 上から --> <g> <text x="290" y="60" font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#FF6F61">ア</text> <path d="M 270 75 L 245 110" stroke="#FF6F61" stroke-width="2" fill="none" marker-end="url(#arr1)"/> </g> <!-- イ: 真横 --> <g> <text x="295" y="138" font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#3FCB99">イ</text> <path d="M 275 133 L 245 133" stroke="#3FCB99" stroke-width="2" fill="none" marker-end="url(#arr2)"/> </g> <!-- ウ: 下から --> <g> <text x="290" y="220" font-size="13" font-family="\'Hiragino Sans\', \'Hiragino Maru Gothic ProN\', \'Yu Gothic\', Meiryo, \'M PLUS Rounded 1c\', sans-serif" font-weight="bold" fill="#8B5CF6">ウ</text> <path d="M 270 200 L 245 160" stroke="#8B5CF6" stroke-width="2" fill="none" marker-end="url(#arr3)"/> </g> <defs> <marker id="arr1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#FF6F61"/></marker> <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#3FCB99"/></marker> <marker id="arr3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8B5CF6"/></marker> </defs> </svg>', opts:['ア（上から）','イ（真横、液面と同じ高さ）','ウ（下から）','どこでもよい'], a:'イ（真横、液面と同じ高さ）', hint:'液面と目線を同じ高さにして、メニスカス（くぼみ）の底を読む。' },
+    { t:'メスシリンダー', d:2, type:'c', q:'メスシリンダーで水の体積を読むとき、目盛りは何の位置で読む？', opts:['水面の一番高いところ','液面のくぼみの底（メニスカス）','水面の中央あたりの平均','どこでもよい'], a:'液面のくぼみの底（メニスカス）', hint:'水面はわずかに凹む。その一番低い位置で読む。' }
   ],
 
   social: [
     // 歴史（プリント No.1〜6 / 教科書 p.10,11,24-31,34,35,37,39,41）
-    { t:'時代の表し方', type:'i', q:'西暦100年は何世紀？', a:['1世紀','一世紀','１世紀'], hint:'1〜100年が1世紀。' },
-    { t:'時代の表し方', type:'i', q:'西暦1620年は何世紀？', a:['17世紀','十七世紀','１７世紀'], hint:'1601〜1700年が17世紀。' },
-    { t:'時代の表し方', type:'c', q:'紀元前1年の翌年は？', opts:['紀元前2年','紀元1年','紀元0年','紀元前0年'], a:'紀元1年', hint:'紀元0年は存在しない。' },
-    { t:'人類の起源', type:'c', q:'もっとも古い人類のなかまは？', opts:['猿人','原人','旧人','新人'], a:'猿人', hint:'猿人→原人→旧人→新人。アフリカで誕生。' },
-    { t:'人類の起源', type:'c', q:'今の人類と同じ種のなかまは？', opts:['猿人','原人','旧人','新人'], a:'新人', hint:'新人（ホモ・サピエンス）。' },
-    { t:'石器時代', type:'c', q:'打製石器を使い、狩りや採集で生活していた時代は？', opts:['旧石器時代','新石器時代','青銅器時代','鉄器時代'], a:'旧石器時代', hint:'石を打ち欠いた道具。' },
-    { t:'石器時代', type:'c', q:'磨製石器や土器を使い、農耕・牧畜を始めた時代は？', opts:['旧石器時代','新石器時代','青銅器時代','鉄器時代'], a:'新石器時代', hint:'磨いた石器、土器、農耕牧畜。' },
-    { t:'四大文明', type:'i', q:'ナイル川流域に栄えた文明は？', a:['エジプト文明','エジプト'], hint:'ピラミッド、象形文字で有名。' },
-    { t:'四大文明', type:'i', q:'チグリス川・ユーフラテス川流域に栄えた文明は？', a:['メソポタミア文明','メソポタミア'], hint:'くさび形文字、ハンムラビ法典。' },
-    { t:'四大文明', type:'i', q:'インダス川流域に栄えた文明は？', a:['インダス文明','インダス'], hint:'モヘンジョ＝ダロの遺跡。' },
-    { t:'四大文明', type:'i', q:'黄河流域に栄えた文明は？', a:['中国文明','黄河文明','こうがぶんめい'], hint:'のちに長江流域も栄える。' },
-    { t:'四大文明', type:'i', q:'エジプト文明で使われた絵のような文字は？', a:['象形文字','ヒエログリフ','しょうけいもじ'], hint:'パピルスに書かれた。' },
-    { t:'四大文明', type:'i', q:'メソポタミア文明で粘土板に刻まれた文字は？', a:['くさび形文字','楔形文字','くさびがたもじ'], hint:'尖った道具で粘土板に刻む。' },
-    { t:'中国王朝', type:'i', q:'紀元前16世紀ごろに中国でおこり、甲骨文字を使った王朝は？', a:['殷','いん','商','しょう'], hint:'亀の甲羅や獣の骨に文字を刻んだ。' },
-    { t:'中国王朝', type:'i', q:'紀元前3世紀に中国を初めて統一した王朝は？', a:['秦','しん'], hint:'始皇帝。万里の長城。' },
-    { t:'中国王朝', type:'i', q:'秦のあと、中国を治めた王朝は？（漢字一字）', a:['漢','かん'], hint:'シルクロードでローマと交易。' },
-    { t:'ギリシャ・ローマ', type:'c', q:'紀元前4世紀にギリシャからインドまでの大帝国を築いたのは？', opts:['アレクサンドロス大王','カエサル','始皇帝','ハンムラビ王'], a:'アレクサンドロス大王', hint:'ヘレニズム文化を広めた。' },
-    { t:'ギリシャ・ローマ', type:'i', q:'古代ローマで剣闘士の戦いなどが行われた円形の競技場は？', a:['コロッセオ','コロッセウム','コロセウム'], hint:'ローマ市内に遺跡。' },
-    { t:'ギリシャ・ローマ', type:'c', q:'古代ギリシャで生まれた政治のしくみは？', opts:['民主政','王政','貴族政','独裁政'], a:'民主政', hint:'市民が直接政治に参加（ただし奴隷・女性を除く）。アテネが代表。' },
+    { t:'時代の表し方', d:2, type:'i', q:'西暦100年は何世紀？', a:['1世紀','一世紀','１世紀'], hint:'1〜100年が1世紀。' },
+    { t:'時代の表し方', d:2, type:'i', q:'西暦1620年は何世紀？', a:['17世紀','十七世紀','１７世紀'], hint:'1601〜1700年が17世紀。' },
+    { t:'時代の表し方', d:3, type:'c', q:'紀元前1年の翌年は？', opts:['紀元前2年','紀元1年','紀元0年','紀元前0年'], a:'紀元1年', hint:'紀元0年は存在しない。' },
+    { t:'人類の起源', d:1, type:'c', q:'もっとも古い人類のなかまは？', opts:['猿人','原人','旧人','新人'], a:'猿人', hint:'猿人→原人→旧人→新人。アフリカで誕生。' },
+    { t:'人類の起源', d:1, type:'c', q:'今の人類と同じ種のなかまは？', opts:['猿人','原人','旧人','新人'], a:'新人', hint:'新人（ホモ・サピエンス）。' },
+    { t:'石器時代', d:2, type:'c', q:'打製石器を使い、狩りや採集で生活していた時代は？', opts:['旧石器時代','新石器時代','青銅器時代','鉄器時代'], a:'旧石器時代', hint:'石を打ち欠いた道具。' },
+    { t:'石器時代', d:2, type:'c', q:'磨製石器や土器を使い、農耕・牧畜を始めた時代は？', opts:['旧石器時代','新石器時代','青銅器時代','鉄器時代'], a:'新石器時代', hint:'磨いた石器、土器、農耕牧畜。' },
+    { t:'四大文明', d:1, type:'i', q:'ナイル川流域に栄えた文明は？', a:['エジプト文明','エジプト'], hint:'ピラミッド、象形文字で有名。' },
+    { t:'四大文明', d:1, type:'i', q:'チグリス川・ユーフラテス川流域に栄えた文明は？', a:['メソポタミア文明','メソポタミア'], hint:'くさび形文字、ハンムラビ法典。' },
+    { t:'四大文明', d:1, type:'i', q:'インダス川流域に栄えた文明は？', a:['インダス文明','インダス'], hint:'モヘンジョ＝ダロの遺跡。' },
+    { t:'四大文明', d:1, type:'i', q:'黄河流域に栄えた文明は？', a:['中国文明','黄河文明','こうがぶんめい'], hint:'のちに長江流域も栄える。' },
+    { t:'四大文明', d:1, type:'i', q:'エジプト文明で使われた絵のような文字は？', a:['象形文字','ヒエログリフ','しょうけいもじ'], hint:'パピルスに書かれた。' },
+    { t:'四大文明', d:1, type:'i', q:'メソポタミア文明で粘土板に刻まれた文字は？', a:['くさび形文字','楔形文字','くさびがたもじ'], hint:'尖った道具で粘土板に刻む。' },
+    { t:'中国王朝', d:2, type:'i', q:'紀元前16世紀ごろに中国でおこり、甲骨文字を使った王朝は？', a:['殷','いん','商','しょう'], hint:'亀の甲羅や獣の骨に文字を刻んだ。' },
+    { t:'中国王朝', d:2, type:'i', q:'紀元前3世紀に中国を初めて統一した王朝は？', a:['秦','しん'], hint:'始皇帝。万里の長城。' },
+    { t:'中国王朝', d:2, type:'i', q:'秦のあと、中国を治めた王朝は？（漢字一字）', a:['漢','かん'], hint:'シルクロードでローマと交易。' },
+    { t:'ギリシャ・ローマ', d:2, type:'c', q:'紀元前4世紀にギリシャからインドまでの大帝国を築いたのは？', opts:['アレクサンドロス大王','カエサル','始皇帝','ハンムラビ王'], a:'アレクサンドロス大王', hint:'ヘレニズム文化を広めた。' },
+    { t:'ギリシャ・ローマ', d:2, type:'i', q:'古代ローマで剣闘士の戦いなどが行われた円形の競技場は？', a:['コロッセオ','コロッセウム','コロセウム'], hint:'ローマ市内に遺跡。' },
+    { t:'ギリシャ・ローマ', d:2, type:'c', q:'古代ギリシャで生まれた政治のしくみは？', opts:['民主政','王政','貴族政','独裁政'], a:'民主政', hint:'市民が直接政治に参加（ただし奴隷・女性を除く）。アテネが代表。' },
     // 地理（教科書 p167-177 / 地図帳 都道府県）
-    { t:'都道府県', type:'i', q:'北海道の道庁所在地は？（漢字で）', a:['札幌','札幌市','さっぽろ'], hint:'札幌市。' },
-    { t:'都道府県', type:'i', q:'宮城県の県庁所在地は？（漢字で）', a:['仙台','仙台市','せんだい'], hint:'東北最大の都市。' },
-    { t:'都道府県', type:'i', q:'神奈川県の県庁所在地は？（漢字で）', a:['横浜','横浜市','よこはま'], hint:'人口最多の市町村。' },
-    { t:'都道府県', type:'i', q:'愛知県の県庁所在地は？（漢字で）', a:['名古屋','名古屋市','なごや'], hint:'中部地方最大の都市。' },
-    { t:'都道府県', type:'i', q:'石川県の県庁所在地は？（漢字で）', a:['金沢','金沢市','かなざわ'], hint:'兼六園で有名。' },
-    { t:'都道府県', type:'i', q:'三重県の県庁所在地は？（漢字で）', a:['津','津市','つ'], hint:'日本一短い県庁所在地名（1文字）。' },
-    { t:'都道府県', type:'i', q:'兵庫県の県庁所在地は？（漢字で）', a:['神戸','神戸市','こうべ'], hint:'港町。明石市も兵庫県。' },
-    { t:'都道府県', type:'i', q:'島根県の県庁所在地は？（漢字で）', a:['松江','松江市','まつえ'], hint:'鳥取県の県庁所在地（鳥取）と混同注意。' },
-    { t:'都道府県', type:'i', q:'香川県の県庁所在地は？（漢字で）', a:['高松','高松市','たかまつ'], hint:'四国の北東部。' },
-    { t:'都道府県', type:'i', q:'愛媛県の県庁所在地は？（漢字で）', a:['松山','松山市','まつやま'], hint:'道後温泉。四国の北西部。' },
-    { t:'都道府県', type:'i', q:'沖縄県の県庁所在地は？（漢字で）', a:['那覇','那覇市','なは'], hint:'沖縄本島南部。' },
-    { t:'都道府県', type:'i', q:'岩手県の県庁所在地は？（漢字で）', a:['盛岡','盛岡市','もりおか'], hint:'盛岡市。' },
-    { t:'都道府県', type:'i', q:'栃木県の県庁所在地は？（漢字で）', a:['宇都宮','宇都宮市','うつのみや'], hint:'宇都宮市。餃子で有名。' },
-    { t:'都道府県', type:'i', q:'群馬県の県庁所在地は？（漢字で）', a:['前橋','前橋市','まえばし'], hint:'前橋市。' },
-    { t:'都道府県', type:'i', q:'茨城県の県庁所在地は？（漢字で）', a:['水戸','水戸市','みと'], hint:'水戸市。納豆で有名。' },
-    { t:'都道府県', type:'c', q:'日本でいちばん面積が大きい都道府県は？', opts:['北海道','岩手県','長野県','東京都'], a:'北海道', hint:'47都道府県中、断トツの大きさ。' },
-    { t:'都道府県', type:'c', q:'日本でいちばん面積が小さい都道府県は？', opts:['東京都','大阪府','沖縄県','香川県'], a:'香川県', hint:'四国の北東部、瀬戸内海に面する。' },
+    { t:'都道府県', d:1, type:'i', q:'北海道の道庁所在地は？（漢字で）', a:['札幌','札幌市','さっぽろ'], hint:'札幌市。' },
+    { t:'都道府県', d:2, type:'i', q:'宮城県の県庁所在地は？（漢字で）', a:['仙台','仙台市','せんだい'], hint:'東北最大の都市。' },
+    { t:'都道府県', d:2, type:'i', q:'神奈川県の県庁所在地は？（漢字で）', a:['横浜','横浜市','よこはま'], hint:'人口最多の市町村。' },
+    { t:'都道府県', d:2, type:'i', q:'愛知県の県庁所在地は？（漢字で）', a:['名古屋','名古屋市','なごや'], hint:'中部地方最大の都市。' },
+    { t:'都道府県', d:2, type:'i', q:'石川県の県庁所在地は？（漢字で）', a:['金沢','金沢市','かなざわ'], hint:'兼六園で有名。' },
+    { t:'都道府県', d:2, type:'i', q:'三重県の県庁所在地は？（漢字で）', a:['津','津市','つ'], hint:'日本一短い県庁所在地名（1文字）。' },
+    { t:'都道府県', d:2, type:'i', q:'兵庫県の県庁所在地は？（漢字で）', a:['神戸','神戸市','こうべ'], hint:'港町。明石市も兵庫県。' },
+    { t:'都道府県', d:2, type:'i', q:'島根県の県庁所在地は？（漢字で）', a:['松江','松江市','まつえ'], hint:'鳥取県の県庁所在地（鳥取）と混同注意。' },
+    { t:'都道府県', d:2, type:'i', q:'香川県の県庁所在地は？（漢字で）', a:['高松','高松市','たかまつ'], hint:'四国の北東部。' },
+    { t:'都道府県', d:2, type:'i', q:'愛媛県の県庁所在地は？（漢字で）', a:['松山','松山市','まつやま'], hint:'道後温泉。四国の北西部。' },
+    { t:'都道府県', d:2, type:'i', q:'沖縄県の県庁所在地は？（漢字で）', a:['那覇','那覇市','なは'], hint:'沖縄本島南部。' },
+    { t:'都道府県', d:2, type:'i', q:'岩手県の県庁所在地は？（漢字で）', a:['盛岡','盛岡市','もりおか'], hint:'盛岡市。' },
+    { t:'都道府県', d:2, type:'i', q:'栃木県の県庁所在地は？（漢字で）', a:['宇都宮','宇都宮市','うつのみや'], hint:'宇都宮市。餃子で有名。' },
+    { t:'都道府県', d:2, type:'i', q:'群馬県の県庁所在地は？（漢字で）', a:['前橋','前橋市','まえばし'], hint:'前橋市。' },
+    { t:'都道府県', d:2, type:'i', q:'茨城県の県庁所在地は？（漢字で）', a:['水戸','水戸市','みと'], hint:'水戸市。納豆で有名。' },
+    { t:'都道府県', d:1, type:'c', q:'日本でいちばん面積が大きい都道府県は？', opts:['北海道','岩手県','長野県','東京都'], a:'北海道', hint:'47都道府県中、断トツの大きさ。' },
+    { t:'都道府県', d:1, type:'c', q:'日本でいちばん面積が小さい都道府県は？', opts:['東京都','大阪府','沖縄県','香川県'], a:'香川県', hint:'四国の北東部、瀬戸内海に面する。' },,
+    // ===== 追加：時代の表し方 =====
+    { t:'時代の表し方', d:1, type:'i', q:'西暦1年〜100年は何世紀？', a:['1','一','1世紀','一世紀'], hint:'1年〜100年が1世紀。年÷100の切り上げ。' },
+    { t:'時代の表し方', d:1, type:'i', q:'西暦2000年は何世紀？', a:['20','二十','20世紀','二十世紀'], hint:'2000年は20世紀の最終年（2001年から21世紀）。' },
+    { t:'時代の表し方', d:2, type:'i', q:'西暦2026年は何世紀？', a:['21','二十一','21世紀','二十一世紀'], hint:'2001〜2100年が21世紀。' },
+    { t:'時代の表し方', d:2, type:'c', q:'紀元前を表す記号は？', opts:['BC','AD','PM','BP'], a:'BC', hint:'BC = Before Christ（キリスト誕生以前）。AD = Anno Domini。' },
+    { t:'時代の表し方', d:2, type:'c', q:'西暦の起点（紀元1年）は何の年とされている？', opts:['ピラミッドが完成した年','キリストが生まれたとされる年','インダス文明が始まった年','ローマ帝国が成立した年'], a:'キリストが生まれたとされる年', hint:'実際の誕生年とは少しズレているが、便宜上の起点。' },
+    { t:'時代の表し方', d:3, type:'i', q:'紀元前80年は紀元前何世紀？', a:['1','一','1世紀','一世紀'], hint:'紀元前1年〜紀元前100年が紀元前1世紀。' },
+    // ===== 追加：人類の起源 =====
+    { t:'人類の起源', d:1, type:'c', q:'人類が初めて現れたのはどの大陸？', opts:['アジア','アフリカ','ヨーロッパ','南アメリカ'], a:'アフリカ', hint:'最古の人類の化石はアフリカで発見されている。' },
+    { t:'人類の起源', d:1, type:'i', q:'今からおよそ何百万年前に最古の人類が現れた？（数字のみ、四百なら4）', a:['700','7','700万','7百'], hint:'約700万年前にサヘラントロプスなど最古の人類が登場。' },
+    { t:'人類の起源', d:2, type:'c', q:'猿人・原人・新人を古い順に並べたとき、最も新しい段階は？', opts:['猿人','原人','新人','旧人'], a:'新人', hint:'新人＝ホモ・サピエンス。私たちの直接の祖先。' },
+    { t:'人類の起源', d:2, type:'i', q:'人類が他の動物と異なる、後ろ足だけで立って歩くことを何という？', a:['直立二足歩行','二足歩行'], hint:'直立二足歩行で両手が自由になり、道具を使えるようになった。' },
+    { t:'人類の起源', d:2, type:'c', q:'原人が使えるようになった、人類の進化に大きく貢献したものは？', opts:['鉄器','言葉と火','文字','馬'], a:'言葉と火', hint:'火の使用で食べ物を加熱し、寒さもしのげるようになった。' },
+    // ===== 追加：石器時代 =====
+    { t:'石器時代', d:2, type:'i', q:'打製石器を使っていた時代を何という？', a:['旧石器時代'], hint:'打製石器＝石を打ち欠いて作った道具。旧石器時代。' },
+    { t:'石器時代', d:2, type:'i', q:'磨製石器や土器を使っていた時代を何という？', a:['新石器時代'], hint:'磨製石器＝石を磨いて作った道具。新石器時代。' },
+    { t:'石器時代', d:2, type:'c', q:'新石器時代に始まった、自然の植物を育てて食料を得るしくみは？', opts:['狩り','採集','農耕','貿易'], a:'農耕', hint:'農耕の始まりで、人々は定住生活ができるようになった。' },
+    { t:'石器時代', d:3, type:'c', q:'新石器時代の生活の特徴として正しいのは？', opts:['移動しながら狩猟','洞窟で一人暮らし','むらを作って定住','遊牧のみ'], a:'むらを作って定住', hint:'農耕で食料が安定 → むらを作って定住するようになる。' },
+    // ===== 追加：四大文明 =====
+    { t:'四大文明', d:1, type:'c', q:'最古の四大文明はどこの大陸で生まれた？（おもに）', opts:['アジアとアフリカ','ヨーロッパ','アメリカ','オーストラリア'], a:'アジアとアフリカ', hint:'エジプトはアフリカ、他はアジアの大河流域。' },
+    { t:'四大文明', d:1, type:'i', q:'エジプト文明で巨大な王の墓として作られた建造物は？', a:['ピラミッド'], hint:'ファラオ（王）の墓。最大のものはギザにある。' },
+    { t:'四大文明', d:2, type:'i', q:'インダス文明で計画的に作られた都市の遺跡（インダス川下流）は？', a:['モヘンジョ・ダロ','モヘンジョダロ','モヘンジョ=ダロ'], hint:'排水溝や公衆浴場まで備えた計画都市。' },
+    { t:'四大文明', d:1, type:'c', q:'インダス文字はどんな性質？', opts:['すべて解読されている','まだ解読されていない','日本語と同じ','絵だけ'], a:'まだ解読されていない', hint:'インダス文字は現在も解読されていない謎の文字。' },
+    { t:'四大文明', d:2, type:'i', q:'中国文明で、占いに使われた、亀の甲や牛の骨に刻まれた文字は？', a:['甲骨文字','こうこつ文字'], hint:'殷（商）の時代の文字。漢字のもとになった。' },
+    { t:'四大文明', d:2, type:'c', q:'エジプト文明とメソポタミア文明に共通することは？', opts:['同じ大陸にある','大河の流域に発展した','寒い地域で発展した','海岸沿いに発展した'], a:'大河の流域に発展した', hint:'四大文明はすべて大河の流域で発展（治水と肥沃な土壌）。' },
+    { t:'四大文明', d:2, type:'i', q:'メソポタミア文明で月の満ち欠けをもとに作られたこよみは？', a:['太陰暦','たいいんれき'], hint:'月の満ち欠け＝太陰暦。エジプトは太陽暦（太陽の動き）。' },
+    { t:'四大文明', d:2, type:'i', q:'エジプト文明で1年を365日とした、太陽をもとにしたこよみは？', a:['太陽暦','たいようれき'], hint:'ナイル川の氾濫の時期を正確に予測する必要から発達。' },
+    // ===== 追加：中国王朝 =====
+    { t:'中国王朝', d:2, type:'i', q:'紀元前3世紀、初めて中国を統一した王朝の王の名前は？', a:['始皇帝','秦の始皇帝'], hint:'万里の長城の整備や度量衡・文字の統一を行った。' },
+    { t:'中国王朝', d:2, type:'i', q:'秦の始皇帝が北方の遊牧民族の侵入を防ぐために整備した長大な建造物は？', a:['万里の長城','長城'], hint:'もとからあった城壁をつなぎ合わせて整備。' },
+    { t:'中国王朝', d:2, type:'c', q:'漢の時代に中国と西方を結んで物資や文化が行き来した交易路の通称は？', opts:['アッピア街道','シルクロード','東海道','大運河'], a:'シルクロード', hint:'絹の道（絹を運ぶ道）。仏教伝来にも関係。' },
+    { t:'中国王朝', d:3, type:'c', q:'秦に滅ぼされる前の中国で、各地の国が争った時代を何という？', opts:['春秋・戦国時代','三国時代','南北朝時代','五胡十六国時代'], a:'春秋・戦国時代', hint:'紀元前8〜3世紀。孔子もこの時代の人物。' },
+    { t:'中国王朝', d:3, type:'i', q:'春秋・戦国時代の中国で「仁」を説いた思想家は？', a:['孔子'], hint:'儒教の祖。後の中国・日本に大きな影響を与えた。' },
+    // ===== 追加：ギリシャ・ローマ =====
+    { t:'ギリシャ・ローマ', d:1, type:'i', q:'古代ギリシャの代表的な都市国家を何という？（カタカナ）', a:['ポリス'], hint:'アテネ・スパルタなどのポリスが各地にあった。' },
+    { t:'ギリシャ・ローマ', d:2, type:'i', q:'古代ギリシャの民主政の中心となったポリスは？', a:['アテネ','アテナイ'], hint:'成年男性市民が政治に参加した（女性・奴隷は除外）。' },
+    { t:'ギリシャ・ローマ', d:2, type:'i', q:'紀元前4世紀、マケドニアの王として大帝国を築いた人物は？', a:['アレクサンドロス大王','アレクサンドロス','アレクサンダー大王'], hint:'ギリシャから中央アジア・インダス川まで征服した。' },
+    { t:'ギリシャ・ローマ', d:2, type:'c', q:'アレクサンドロス大王の遠征の結果生まれた、ギリシャと東方の文化が融合した文化は？', opts:['ローマ文化','ヘレニズム文化','ルネサンス文化','ビザンツ文化'], a:'ヘレニズム文化', hint:'ヘレネス＝ギリシャ人の意味。各地に新しい文化が生まれた。' },
+    { t:'ギリシャ・ローマ', d:2, type:'i', q:'古代ローマで剣闘士の戦いが行われた円形の競技場の名前は？', a:['コロッセオ','コロッセウム'], hint:'今もイタリアのローマに残る世界遺産。' },
+    { t:'ギリシャ・ローマ', d:2, type:'c', q:'地中海全域を支配した古代ローマの政治体制の特徴として正しいのは？', opts:['共和政から帝政へ変化した','一貫して民主政だった','一貫して王政だった','常に複数国の連合体だった'], a:'共和政から帝政へ変化した', hint:'最初は共和政、後に皇帝が支配する帝政に。' },
+    { t:'ギリシャ・ローマ', d:3, type:'i', q:'パレスチナで生まれ、後にローマ帝国でも広まった、世界宗教の1つは？', a:['キリスト教'], hint:'イエス・キリストの教え。4世紀にローマ帝国の国教に。' },
+    // ===== 追加：都道府県 =====
+    { t:'都道府県', d:1, type:'c', q:'日本でいちばん人口が多い都道府県は？', opts:['東京都','大阪府','神奈川県','愛知県'], a:'東京都', hint:'約1400万人。' },
+    { t:'都道府県', d:1, type:'i', q:'日本の首都がある都道府県は？', a:['東京','東京都'], hint:'政治・経済の中心。' },
+    { t:'都道府県', d:1, type:'i', q:'青森県の県庁所在地は？（漢字で）', a:['青森','青森市'], hint:'県名と同じ「青森市」。' },
+    { t:'都道府県', d:1, type:'i', q:'秋田県の県庁所在地は？（漢字で）', a:['秋田','秋田市'], hint:'県名と同じ「秋田市」。' },
+    { t:'都道府県', d:1, type:'i', q:'山形県の県庁所在地は？（漢字で）', a:['山形','山形市'], hint:'県名と同じ「山形市」。' },
+    { t:'都道府県', d:1, type:'i', q:'福島県の県庁所在地は？（漢字で）', a:['福島','福島市'], hint:'県名と同じ「福島市」。' },
+    { t:'都道府県', d:1, type:'i', q:'長野県の県庁所在地は？（漢字で）', a:['長野','長野市'], hint:'県名と同じ「長野市」。' },
+    { t:'都道府県', d:1, type:'i', q:'新潟県の県庁所在地は？（漢字で）', a:['新潟','新潟市'], hint:'県名と同じ「新潟市」。' },
+    { t:'都道府県', d:1, type:'i', q:'静岡県の県庁所在地は？（漢字で）', a:['静岡','静岡市'], hint:'県名と同じ「静岡市」。' },
+    { t:'都道府県', d:1, type:'i', q:'広島県の県庁所在地は？（漢字で）', a:['広島','広島市'], hint:'県名と同じ「広島市」。' },
+    { t:'都道府県', d:1, type:'i', q:'福岡県の県庁所在地は？（漢字で）', a:['福岡','福岡市'], hint:'県名と同じ「福岡市」。' },
+    { t:'都道府県', d:1, type:'i', q:'熊本県の県庁所在地は？（漢字で）', a:['熊本','熊本市'], hint:'県名と同じ「熊本市」。' },
+    { t:'都道府県', d:1, type:'i', q:'鹿児島県の県庁所在地は？（漢字で）', a:['鹿児島','鹿児島市'], hint:'県名と同じ「鹿児島市」。' },
+    { t:'都道府県', d:2, type:'i', q:'埼玉県の県庁所在地は？（漢字で）', a:['さいたま','さいたま市'], hint:'平仮名で「さいたま市」が正式。' },
+    { t:'都道府県', d:2, type:'i', q:'山梨県の県庁所在地は？（漢字で）', a:['甲府','甲府市'], hint:'武田信玄の本拠地でもあった。' },
+    { t:'都道府県', d:2, type:'i', q:'滋賀県の県庁所在地は？（漢字で）', a:['大津','大津市'], hint:'琵琶湖の南端に位置する。' },
+    { t:'都道府県', d:2, type:'i', q:'岐阜県の県庁所在地は？（漢字で）', a:['岐阜','岐阜市'], hint:'県名と同じ「岐阜市」。長良川の鵜飼で有名。' },
+    { t:'都道府県', d:2, type:'i', q:'沖縄県の県庁所在地は？（漢字で）', a:['那覇','那覇市'], hint:'本島の南西部に位置する。' },
+    { t:'都道府県', d:1, type:'c', q:'4つの大きな島のうち、最も南にあるのは？', opts:['本州','北海道','四国','九州'], a:'九州', hint:'北から北海道→本州→四国→九州。' },
+    { t:'都道府県', d:1, type:'c', q:'政令指定都市が「2つ」ある都道府県はどれ？', opts:['東京都','神奈川県','大阪府','静岡県'], a:'静岡県', hint:'静岡市と浜松市の2つ。' },
+    { t:'都道府県', d:1, type:'i', q:'47都道府県のうち、「都」がつくのは？', a:['東京都','東京'], hint:'1都1道2府43県＝計47。' },
+    { t:'都道府県', d:2, type:'c', q:'日本の地方区分で、最も都道府県数が多い地方は？', opts:['東北地方','関東地方','中部地方','近畿地方'], a:'中部地方', hint:'中部地方は新潟・富山・石川・福井・山梨・長野・岐阜・静岡・愛知の9県。' },
+    // ===== 新トピック：地理（地形・気候） =====
+    { t:'地理', d:1, type:'c', q:'日本の標準時子午線が通る都市は？', opts:['東京','京都','明石','札幌'], a:'明石', hint:'兵庫県明石市を通る東経135度線が日本標準時。' },
+    { t:'地理', d:1, type:'i', q:'日本で最も長い川は？', a:['信濃川'], hint:'長野県・新潟県を流れる川。長さ約367km。' },
+    { t:'地理', d:1, type:'i', q:'日本で最も大きな湖は？', a:['琵琶湖','びわ湖'], hint:'滋賀県にある日本最大の湖。' },
+    { t:'地理', d:1, type:'i', q:'日本で最も高い山は？', a:['富士山'], hint:'標高3776m。山梨県と静岡県にまたがる。' },
+    { t:'地理', d:2, type:'c', q:'日本の国土の約何%が山地・丘陵？', opts:['約25%','約50%','約75%','約90%'], a:'約75%', hint:'平地は約25%しかない。山がちな地形が特徴。' }
   ]
 };
 
@@ -1405,6 +2080,7 @@ const state = {
   bestStreakSession: 0,
   startedAt: 0,
   questionCount: 10,
+  difficulty: 0,        // 0=ミックス, 1/2/3=星の数
   reviewMode: false,
   data: null,
   audioReady: false
@@ -1415,6 +2091,8 @@ function newData() {
     overall: { totalAnswered: 0, totalCorrect: 0, sessions: 0, bestStreak: 0 },
     subjects: {},
     wrongs: {},
+    history: [],
+    seen: {},
     prefs: { sound: true, effects: true }
   };
 }
@@ -1428,6 +2106,8 @@ function loadData() {
       if (typeof d.overall.bestStreak !== 'number') d.overall.bestStreak = 0;
       if (!d.subjects) d.subjects = {};
       if (!d.wrongs) d.wrongs = {};
+      if (!d.history) d.history = [];
+      if (!d.seen) d.seen = {};
       if (!d.prefs) d.prefs = { sound: true, effects: true };
       return d;
     }
@@ -1617,6 +2297,139 @@ function getEncourageMsg() {
   return msgs[Math.floor(Math.random() * msgs.length)];
 }
 
+// ==================== DATE HELPERS ====================
+function formatDateKey(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+function parseDateKey(s) {
+  const parts = s.split('-').map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+function groupHistoryByDate(historyArr) {
+  const days = {};
+  for (const h of historyArr) {
+    if (!days[h.date]) days[h.date] = [];
+    days[h.date].push(h);
+  }
+  return Object.keys(days)
+    .sort((a, b) => b.localeCompare(a))
+    .map(date => ({ date: date, sessions: days[date] }));
+}
+function getTopicDistribution(wrongs) {
+  const topics = {};
+  for (const w of wrongs) {
+    const t = w.t || 'その他';
+    topics[t] = (topics[t] || 0) + 1;
+  }
+  return Object.entries(topics).sort((a, b) => b[1] - a[1]);
+}
+
+function getCoverage(subjectId) {
+  const all = QUESTIONS[subjectId] || [];
+  const seen = (state.data.seen && state.data.seen[subjectId]) || [];
+  const seenSet = new Set(seen);
+  const seenCount = all.filter(q => seenSet.has(q.q)).length;
+  return { total: all.length, seen: seenCount, pct: all.length > 0 ? Math.round(100 * seenCount / all.length) : 0 };
+}
+
+function getCoverageByTopic(subjectId) {
+  const all = QUESTIONS[subjectId] || [];
+  const seen = (state.data.seen && state.data.seen[subjectId]) || [];
+  const seenSet = new Set(seen);
+  const byTopic = {};
+  for (const q of all) {
+    const t = q.t || 'その他';
+    if (!byTopic[t]) byTopic[t] = { total: 0, seen: 0 };
+    byTopic[t].total++;
+    if (seenSet.has(q.q)) byTopic[t].seen++;
+  }
+  return Object.entries(byTopic)
+    .map(([name, info]) => ({
+      name: name,
+      total: info.total,
+      seen: info.seen,
+      pct: Math.round(100 * info.seen / info.total)
+    }))
+    .sort((a, b) => a.pct - b.pct);
+}
+
+// ==================== PARENT REPORT ====================
+function generateReport() {
+  const ov = state.data.overall;
+  const date = new Date();
+  const dateStr = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' +
+                  String(date.getHours()).padStart(2, '0') + ':' +
+                  String(date.getMinutes()).padStart(2, '0');
+  const pct = ov.totalAnswered > 0 ? Math.round(100 * ov.totalCorrect / ov.totalAnswered) : 0;
+
+  let msg = '📚 中1 前期中間 対策ドリル\n';
+  msg += '果音の学習レポート（' + dateStr + '時点）\n';
+  msg += '──────────\n\n';
+
+  msg += '📊 全体の記録\n';
+  msg += '・のべ解答数 ' + ov.totalAnswered + '問\n';
+  msg += '・正解 ' + ov.totalCorrect + '問（正答率 ' + pct + '%）\n';
+  msg += '・セッション ' + ov.sessions + '回\n';
+  if (ov.bestStreak >= 3) {
+    msg += '・最長連続正解 🔥' + ov.bestStreak + '\n';
+  }
+  msg += '\n';
+
+  msg += '📖 教科別ベスト\n';
+  let anyAttempted = false;
+  for (const s of SUBJECTS) {
+    const sd = state.data.subjects[s.id];
+    if (sd && sd.attempts > 0) {
+      anyAttempted = true;
+      const total = QUESTIONS[s.id].length;
+      msg += s.emoji + ' ' + s.ja + '：' + sd.best + '/' + total + '（' + sd.attempts + '回挑戦）\n';
+    }
+  }
+  if (!anyAttempted) {
+    msg += '（まだ挑戦記録なし）\n';
+  }
+
+  const wrongCounts = SUBJECTS.map(s => ({
+    s: s, n: (state.data.wrongs[s.id] || []).length
+  })).filter(x => x.n > 0);
+
+  if (wrongCounts.length > 0) {
+    msg += '\n🎯 復習が必要な問題数\n';
+    wrongCounts.forEach(x => {
+      msg += x.s.emoji + ' ' + x.s.ja + '：' + x.n + '問\n';
+    });
+  } else if (ov.totalAnswered > 0) {
+    msg += '\n🌟 苦手問題リストは空っぽ！\n';
+  }
+
+  msg += '\n──────────\n';
+  msg += '▼ アプリ\n';
+  msg += location.origin + location.pathname;
+
+  return msg;
+}
+
+async function shareReport() {
+  const msg = generateReport();
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: '果音の学習レポート', text: msg });
+      return;
+    } catch (e) {
+      if (e.name === 'AbortError') return;
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(msg);
+    showToast('📋 コピーしました！LINEやメールに貼ってね');
+    return;
+  } catch (e) {}
+  window.prompt('以下を長押しでコピーしてください', msg);
+}
+
 // ==================== HOME ====================
 function renderHome() {
   const root = document.getElementById('screen-home');
@@ -1759,6 +2572,28 @@ function renderHome() {
   });
   countRow.appendChild(pillRow);
   settingsCard.appendChild(countRow);
+
+  // 難易度
+  const diffRow = el('div', { class: 'settings-row' },
+    el('div', null,
+      el('div', { class: 'settings-label' }, '⭐ 難易度'),
+      el('div', { class: 'settings-sub' }, '星が多いほど難しい')
+    )
+  );
+  const diffPillRow = el('div', { class: 'pill-row' });
+  [
+    { v: 1, l: '★' },
+    { v: 2, l: '★★' },
+    { v: 3, l: '★★★' },
+    { v: 0, l: 'ミックス' }
+  ].forEach(c => {
+    diffPillRow.appendChild(el('button', {
+      class: 'pill' + (state.difficulty === c.v ? ' active' : ''),
+      onclick: () => { state.difficulty = c.v; renderHome(); }
+    }, c.l));
+  });
+  diffRow.appendChild(diffPillRow);
+  settingsCard.appendChild(diffRow);
   root.appendChild(settingsCard);
 
   // stats
@@ -1777,6 +2612,24 @@ function renderHome() {
       el('div', { class: 'lbl' }, '最長連続'))
   ));
 
+  // 学習レポートを見るボタン
+  root.appendChild(el('button', {
+    class: 'view-report-btn',
+    onclick: () => { show('report'); renderReportScreen(); }
+  },
+    el('span', { class: 'report-btn-emoji' }, '📊'),
+    el('span', null, '学習レポートを見る')
+  ));
+
+  // 保護者にレポートを送るボタン
+  root.appendChild(el('button', {
+    class: 'report-btn',
+    onclick: () => shareReport()
+  },
+    el('span', { class: 'report-btn-emoji' }, '📨'),
+    el('span', null, '保護者にレポートを送る')
+  ));
+
   // data management link
   root.appendChild(el('button', {
     class: 'data-link',
@@ -1792,10 +2645,7 @@ function renderHome() {
 function openReviewPicker() {
   const avail = SUBJECTS.filter(s => (state.data.wrongs[s.id] || []).length > 0);
   if (avail.length === 0) return;
-  if (avail.length === 1) {
-    startQuiz(avail[0].id, true);
-    return;
-  }
+  // 1教科でも複数でも、必ずピッカーを表示（科目を選んでもらう）
   const root = document.getElementById('screen-home');
   root.innerHTML = '';
   root.appendChild(el('header', { class: 'app-header' },
@@ -1848,6 +2698,16 @@ function startQuiz(subjectId, reviewMode) {
     state.questions = shuffle(pool);
   } else {
     pool = QUESTIONS[subjectId];
+    // 難易度フィルタ
+    if (state.difficulty >= 1 && state.difficulty <= 3) {
+      const filtered = pool.filter(q => (q.d || 2) === state.difficulty);
+      if (filtered.length === 0) {
+        showToast('この難易度の問題はないみたい');
+        renderHome();
+        return;
+      }
+      pool = filtered;
+    }
     const n = Math.min(state.questionCount, pool.length);
     state.questions = shuffle(pool).slice(0, n);
   }
@@ -1891,13 +2751,21 @@ function renderQuiz() {
 
   // Q card
   const qHtml = q.q.replace(/_{2,}/g, '<span class="blank">&nbsp;</span>');
-  const qCard = el('div', { class: 'q-card' },
+  const stars = '★'.repeat(q.d || 2);
+  const qCardChildren = [
     el('div', { class: 'q-header' },
-      el('span', { class: 'q-number' }, 'Q' + (state.currentIdx + 1)),
+      el('span', { class: 'q-number' },
+        'Q' + (state.currentIdx + 1),
+        el('span', { class: 'q-difficulty' }, ' ' + stars)
+      ),
       q.t ? el('span', { class: 'q-topic' }, q.t) : null
     ),
     el('div', { class: 'q-text', html: qHtml })
-  );
+  ];
+  if (q.svg) {
+    qCardChildren.push(el('div', { class: 'q-illustration', html: q.svg }));
+  }
+  const qCard = el('div', { class: 'q-card' }, ...qCardChildren);
   root.appendChild(qCard);
 
   // answer area
@@ -2039,6 +2907,12 @@ function recordResult(userValue, ev) {
     state.data.wrongs[state.subject] = (state.data.wrongs[state.subject] || [])
       .filter(x => x.q !== q.q);
   }
+  // 既出問題を記録（網羅率計算用）
+  if (!state.data.seen) state.data.seen = {};
+  if (!state.data.seen[state.subject]) state.data.seen[state.subject] = [];
+  if (!state.data.seen[state.subject].includes(q.q)) {
+    state.data.seen[state.subject].push(q.q);
+  }
 }
 
 function nextQuestion() {
@@ -2080,6 +2954,21 @@ async function finishQuiz() {
   if (isNewBest) sd.best = correct;
   if (state.bestStreakSession > state.data.overall.bestStreak) {
     state.data.overall.bestStreak = state.bestStreakSession;
+  }
+  // 履歴を追加
+  if (!state.data.history) state.data.history = [];
+  state.data.history.push({
+    date: formatDateKey(new Date()),
+    ts: Date.now(),
+    subject: state.subject,
+    total: total,
+    correct: correct,
+    durationSec: elapsed,
+    reviewMode: state.reviewMode
+  });
+  // 古い履歴を切り捨て（最新200件のみ）
+  if (state.data.history.length > 200) {
+    state.data.history = state.data.history.slice(-200);
   }
   saveData();
 
@@ -2143,9 +3032,14 @@ function renderResult({ total, correct, pct, elapsed, isNewBest }) {
     root.appendChild(el('div', { class: 'section-label' }, '間違えた問題（' + wrongs.length + '問）', el('div', { class: 'deco' })));
     const list = el('div', { class: 'review-list' });
     wrongs.forEach(r => {
-      list.appendChild(el('div', { class: 'review-item' },
+      const reviewChildren = [
         r.q.t ? el('div', { class: 'review-topic' }, r.q.t) : null,
-        el('div', { class: 'review-q', html: r.q.q.replace(/_{2,}/g, '___') }),
+        el('div', { class: 'review-q', html: r.q.q.replace(/_{2,}/g, '___') })
+      ];
+      if (r.q.svg) {
+        reviewChildren.push(el('div', { class: 'q-illustration', html: r.q.svg }));
+      }
+      reviewChildren.push(
         el('div', { class: 'review-ans' },
           el('span', { class: 'lbl' }, 'あなた'),
           el('span', { class: 'you' }, r.userValue || '（無回答）')),
@@ -2153,12 +3047,22 @@ function renderResult({ total, correct, pct, elapsed, isNewBest }) {
           el('span', { class: 'lbl' }, '正解'),
           el('span', { class: 'right' }, correctAnswerText(r.q))),
         r.q.hint ? el('div', { class: 'review-hint' }, '💡 ' + r.q.hint) : null
-      ));
+      );
+      list.appendChild(el('div', { class: 'review-item' }, ...reviewChildren));
     });
     root.appendChild(list);
   } else {
     root.appendChild(el('div', { class: 'empty' }, '✨ 全問正解！ ✨'));
   }
+
+  // 保護者にレポートを送るボタン（結果画面）
+  root.appendChild(el('button', {
+    class: 'report-btn',
+    onclick: () => shareReport()
+  },
+    el('span', { class: 'report-btn-emoji' }, '📨'),
+    el('span', null, 'この結果を保護者に送る')
+  ));
 
   const actions = el('div', { class: 'quiz-actions' });
   if (wrongs.length > 0 && !state.reviewMode) {
@@ -2176,6 +3080,203 @@ function renderResult({ total, correct, pct, elapsed, isNewBest }) {
     onclick: () => { show('home'); renderHome(); }
   }, 'ホーム'));
   root.appendChild(actions);
+}
+
+// ==================== REPORT SCREEN ====================
+function renderReportScreen() {
+  const root = document.getElementById('screen-report');
+  root.innerHTML = '';
+
+  root.appendChild(el('header', { class: 'app-header' },
+    el('div', { class: 'brand-area' },
+      el('div', { class: 'brand' }, '📊 学習レポート'),
+      el('div', { class: 'brand-sub' }, '日々の記録と苦手分析')
+    ),
+    el('button', { class: 'icon-btn', onclick: () => { show('home'); renderHome(); } }, '🏠')
+  ));
+
+  const history = state.data.history || [];
+  const today = new Date();
+
+  // ===== 1. 14日間のヒートストリップ =====
+  root.appendChild(el('div', { class: 'section-label' }, '🗓 ここ14日間', el('div', { class: 'deco' })));
+  const stripCard = el('div', { class: 'heat-card' });
+  const stripRow = el('div', { class: 'heat-strip' });
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = formatDateKey(d);
+    const dayHist = history.filter(h => h.date === key);
+    const total = dayHist.reduce((s, h) => s + h.total, 0);
+    // 強度（0: 空、1-10: 薄、11-30: 中、31+: 濃）
+    let level = 0;
+    if (total > 30) level = 3;
+    else if (total > 10) level = 2;
+    else if (total > 0) level = 1;
+    const isToday = i === 0;
+    const dom = d.getDate();
+    const cell = el('div', {
+      class: 'heat-cell heat-' + level + (isToday ? ' is-today' : ''),
+      title: key + ' / ' + total + '問'
+    },
+      el('div', { class: 'heat-day' }, String(dom))
+    );
+    stripRow.appendChild(cell);
+  }
+  stripCard.appendChild(stripRow);
+  stripCard.appendChild(el('div', { class: 'heat-legend' },
+    el('span', null, '少'),
+    el('span', { class: 'heat-cell heat-0 mini' }),
+    el('span', { class: 'heat-cell heat-1 mini' }),
+    el('span', { class: 'heat-cell heat-2 mini' }),
+    el('span', { class: 'heat-cell heat-3 mini' }),
+    el('span', null, '多')
+  ));
+  root.appendChild(stripCard);
+
+  // ===== 2. 日別の学習履歴 =====
+  root.appendChild(el('div', { class: 'section-label' }, '📅 日別の学習履歴', el('div', { class: 'deco' })));
+  if (history.length === 0) {
+    root.appendChild(el('div', { class: 'empty-state' }, 'まだ学習記録がありません'));
+  } else {
+    const daily = groupHistoryByDate(history);
+    const list = el('div', { class: 'daily-list' });
+    daily.slice(0, 14).forEach(({ date, sessions }) => {
+      const total = sessions.reduce((s, h) => s + h.total, 0);
+      const correct = sessions.reduce((s, h) => s + h.correct, 0);
+      const pct = Math.round(100 * correct / total);
+      const d = parseDateKey(date);
+      const dateLabel = (d.getMonth() + 1) + '/' + d.getDate();
+      const dowLabel = ['日', '月', '火', '水', '木', '金', '土'][d.getDay()];
+      const isToday = formatDateKey(today) === date;
+
+      const chips = el('div', { class: 'daily-sessions' });
+      sessions.forEach(s => {
+        const subj = SUBJECTS.find(x => x.id === s.subject);
+        if (!subj) return;
+        chips.appendChild(el('span', {
+          class: 'session-chip',
+          style: 'background:' + subj.color + '1f; color:' + subj.color + '; border-color:' + subj.color + '44'
+        },
+          subj.emoji + ' ' + s.correct + '/' + s.total + (s.reviewMode ? ' ✦' : '')
+        ));
+      });
+
+      list.appendChild(el('div', { class: 'daily-item' + (isToday ? ' is-today' : '') },
+        el('div', { class: 'daily-date' },
+          el('div', { class: 'daily-day' }, dateLabel),
+          el('div', { class: 'daily-dow' }, '(' + dowLabel + ')')
+        ),
+        el('div', { class: 'daily-body' },
+          el('div', { class: 'daily-total' }, total + '問・' + pct + '%'),
+          chips
+        )
+      ));
+    });
+    root.appendChild(list);
+  }
+
+  // ===== 3. テスト範囲の網羅率 =====
+  root.appendChild(el('div', { class: 'section-label' }, '📈 テスト範囲の網羅率', el('div', { class: 'deco' })));
+  root.appendChild(el('div', { class: 'coverage-note' },
+    '一度でも解いた問題の割合を表示。タップで単元別の詳細が開きます。'));
+  for (const s of SUBJECTS) {
+    const cov = getCoverage(s.id);
+    if (cov.total === 0) continue;
+    const byTopic = getCoverageByTopic(s.id);
+
+    const summary = el('summary', null,
+      el('span', { class: 'cov-emoji' }, s.emoji),
+      el('span', { class: 'cov-subject' }, s.ja),
+      el('span', { class: 'cov-bar' },
+        el('span', { class: 'cov-fill', style: 'width:' + cov.pct + '%; background:' + s.color })
+      ),
+      el('span', { class: 'cov-pct' }, cov.pct + '%')
+    );
+    const body = el('div', { class: 'cov-body' });
+    body.appendChild(el('div', { class: 'cov-summary' },
+      '完了 ' + cov.seen + '問 / 全' + cov.total + '問'
+    ));
+    byTopic.forEach(t => {
+      body.appendChild(el('div', { class: 'cov-topic-row' + (t.pct < 50 ? ' needs-work' : '') },
+        el('span', { class: 'cov-topic-name' }, t.name),
+        el('span', { class: 'cov-topic-bar' },
+          el('span', { class: 'cov-topic-fill', style: 'width:' + t.pct + '%; background:' + s.color })
+        ),
+        el('span', { class: 'cov-topic-num' }, t.seen + '/' + t.total)
+      ));
+    });
+    const card = el('details', { class: 'cov-card' }, summary, body);
+    root.appendChild(card);
+  }
+
+  // ===== 4. 教科別の苦手分野 =====
+  root.appendChild(el('div', { class: 'section-label' }, '🎯 教科別・苦手分野', el('div', { class: 'deco' })));
+  let hasWrongs = false;
+  for (const s of SUBJECTS) {
+    const wrongs = (state.data.wrongs && state.data.wrongs[s.id]) || [];
+    if (wrongs.length === 0) continue;
+    hasWrongs = true;
+
+    const topics = getTopicDistribution(wrongs);
+    const maxCount = Math.max(1, ...topics.map(t => t[1]));
+
+    const topicList = el('div', { class: 'topic-list' });
+    topics.forEach(([name, count]) => {
+      const pct = (count / maxCount * 100);
+      topicList.appendChild(el('div', {
+        class: 'topic-row',
+        style: 'background: linear-gradient(to right, ' + s.color + '24 0%, ' + s.color + '24 ' + pct + '%, var(--surface-2) ' + pct + '%);'
+      },
+        el('span', { class: 'topic-name' }, name),
+        el('span', { class: 'topic-num' }, count + '問')
+      ));
+    });
+
+    root.appendChild(el('div', { class: 'topic-card' },
+      el('div', { class: 'topic-header' },
+        el('span', { class: 'topic-emoji' }, s.emoji),
+        el('span', { class: 'topic-subject' }, s.ja),
+        el('span', { class: 'topic-count' }, wrongs.length + '問')
+      ),
+      topicList,
+      el('button', {
+        class: 'topic-review-btn',
+        style: 'background:' + s.color,
+        onclick: () => startQuiz(s.id, true)
+      }, '✦ ' + s.ja + 'の苦手だけ復習')
+    ));
+  }
+  if (!hasWrongs) {
+    root.appendChild(el('div', { class: 'empty-state' }, '✨ 苦手な問題はまだないよ！'));
+  }
+
+  // ===== 4. 最近のセッション =====
+  root.appendChild(el('div', { class: 'section-label' }, '📝 最近のセッション', el('div', { class: 'deco' })));
+  if (history.length === 0) {
+    root.appendChild(el('div', { class: 'empty-state' }, 'まだセッション記録がありません'));
+  } else {
+    const sList = el('div', { class: 'session-list' });
+    const recent = history.slice(-20).reverse();
+    recent.forEach(h => {
+      const subj = SUBJECTS.find(x => x.id === h.subject);
+      if (!subj) return;
+      const d = parseDateKey(h.date);
+      const dateLabel = (d.getMonth() + 1) + '/' + d.getDate();
+      const pct = Math.round(100 * h.correct / h.total);
+      sList.appendChild(el('div', { class: 'session-item' },
+        el('span', { class: 'session-date' }, dateLabel),
+        el('span', { class: 'session-subj', style: 'color:' + subj.color },
+          subj.emoji + ' ' + subj.ja),
+        el('span', { class: 'session-score' }, h.correct + '/' + h.total + ' (' + pct + '%)'),
+        h.reviewMode ? el('span', { class: 'session-tag' }, '復習') : null
+      ));
+    });
+    root.appendChild(sList);
+  }
+
+  root.appendChild(el('div', { class: 'footnote' },
+    history.length > 0 ? '※ 最新200件まで保存' : 'まだ記録がないよ。問題に挑戦してね！'));
 }
 
 // ==================== DATA SCREEN ====================
@@ -2283,6 +3384,21 @@ function renderDataScreen() {
   ));
 }
 
+function showUpdateNotice() {
+  let n = document.getElementById('update-notice');
+  if (n) return;
+  n = document.createElement('div');
+  n.id = 'update-notice';
+  n.className = 'update-notice';
+  n.innerHTML = '<span>🎀 アプリが更新されたよ</span>';
+  const btn = document.createElement('button');
+  btn.textContent = '反映する';
+  btn.onclick = () => location.reload();
+  n.appendChild(btn);
+  document.body.appendChild(n);
+  setTimeout(() => n.classList.add('visible'), 50);
+}
+
 function showToast(msg) {
   let t = document.getElementById('toast');
   if (!t) {
@@ -2300,10 +3416,20 @@ function showToast(msg) {
 // ==================== INIT ====================
 (function init() {
   state.data = loadData();
-  // service worker
+  // service worker（更新検知付き）
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const sw = reg.installing;
+          if (!sw) return;
+          sw.addEventListener('statechange', () => {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+              showUpdateNotice();
+            }
+          });
+        });
+      }).catch(() => {});
     });
   }
   renderHome();

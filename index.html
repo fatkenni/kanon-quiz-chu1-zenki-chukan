@@ -596,6 +596,202 @@
   .heat-cell.mini { width: 12px; height: 14px; aspect-ratio: auto; padding: 0; }
   .heat-cell.mini .heat-day { display: none; }
 
+  /* カウントダウン */
+  .countdown-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(255, 71, 126, 0.3);
+  }
+  .cd-icon { font-size: 18px; }
+
+  /* スタンプ帳 */
+  .stamp-card {
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 22px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 217, 229, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(226, 214, 250, 0.4) 0%, transparent 50%),
+      var(--surface);
+  }
+  .stamp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  .stamp-cell {
+    aspect-ratio: 1 / 1.5;
+    border-radius: 12px;
+    background: var(--surface-2);
+    border: 2px dashed var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 2px 4px;
+    position: relative;
+    overflow: hidden;
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    transition: transform .15s;
+    min-height: 70px;
+  }
+  button.stamp-cell {
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button.stamp-cell:active { transform: scale(0.92); }
+  .stamp-cell.is-today {
+    border-style: solid;
+    border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(255, 71, 126, 0.2);
+  }
+  .stamp-cell.is-test {
+    border-style: solid;
+    border-color: var(--purple);
+    background: linear-gradient(135deg, #FFE5F0, #F0E5FF);
+  }
+  .stamp-cell.future {
+    opacity: 0.5;
+  }
+  .stamp-cell.missed {
+    background: var(--surface-2);
+  }
+  .stamp-cell.has-stamp {
+    border-style: solid;
+    border-color: var(--pink-soft);
+  }
+  .stamp-cell.has-stamp.pink {
+    background: linear-gradient(135deg, #FFF5F8, #FFE0EE);
+    border-color: var(--pink-soft);
+  }
+  .stamp-cell.has-stamp.silver {
+    background: linear-gradient(135deg, #F5F0FF, #E2D6FA);
+    border-color: var(--purple-soft);
+  }
+  .stamp-cell.has-stamp.gold {
+    background: linear-gradient(135deg, #FFF8E0, #FFE9A6);
+    border-color: #FFD06B;
+    box-shadow: 0 0 12px rgba(255, 200, 61, 0.3);
+  }
+  .stamp-date {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2px;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .stamp-day {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .stamp-dow {
+    font-size: 9px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .stamp-mark {
+    font-size: 22px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+    margin-top: 3px;
+  }
+  .stamp-mark-empty {
+    font-size: 12px;
+    color: var(--line);
+    line-height: 1;
+    margin-top: 8px;
+  }
+  .stamp-count {
+    font-size: 9px;
+    color: var(--ink-2);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .test-mark {
+    font-size: 18px;
+    line-height: 1;
+    margin-top: 3px;
+  }
+  .test-subjects {
+    font-size: 8px;
+    color: var(--purple);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 2px;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  /* スタンプ押下アニメーション */
+  @keyframes stampPress {
+    0% {
+      transform: scale(0) rotate(-25deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.5) rotate(15deg);
+      opacity: 1;
+    }
+    70% {
+      transform: scale(0.85) rotate(-5deg);
+    }
+    85% {
+      transform: scale(1.1) rotate(3deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+  .stamp-mark.just-pressed {
+    animation: stampPress 0.8s cubic-bezier(.3, 1.5, .5, 1);
+  }
+  @keyframes stampGlow {
+    0%, 100% { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15)); }
+    50% { filter: drop-shadow(0 0 8px rgba(255, 200, 61, 0.6)); }
+  }
+  .stamp-cell.gold .stamp-mark.just-pressed {
+    animation: stampPress 0.8s cubic-bezier(.3, 1.5, .5, 1), stampGlow 2s ease-in-out 0.8s infinite;
+  }
+
+  /* 凡例 */
+  .stamp-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line);
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .legend-emoji {
+    font-size: 14px;
+  }
+
   /* daily list (details) */
   .daily-list { margin-bottom: 22px; }
   .daily-item {
@@ -3187,44 +3383,115 @@ function renderReportScreen() {
   const history = state.data.history || [];
   const today = new Date();
 
-  // ===== 1. 14日間のヒートストリップ =====
-  root.appendChild(el('div', { class: 'section-label' }, '🗓 ここ14日間', el('div', { class: 'deco' })));
-  root.appendChild(el('div', { class: 'coverage-note' }, '日付のマスをタップすると、その日の学習履歴にジャンプできます。'));
-  const stripCard = el('div', { class: 'heat-card' });
-  const stripRow = el('div', { class: 'heat-strip' });
-  for (let i = 13; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    const key = formatDateKey(d);
+  // ===== 1. テストまでのスタンプ帳 =====
+  // テスト日（果音の中1前期中間考査）
+  const TEST_DATES = {
+    '2026-05-26': ['社会', '数学'],
+    '2026-05-27': ['国語', '理科'],
+    '2026-05-28': ['英語']
+  };
+  // 表示範囲：今日から3日前 〜 テスト最終日（5/28）
+  const stampStart = new Date(today);
+  stampStart.setDate(stampStart.getDate() - 3);
+  const stampEnd = new Date(2026, 4, 28); // 5/28（月は0始まり）
+
+  // テストまでの残り日数（今日基準）
+  const testDay1 = new Date(2026, 4, 26);
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const daysLeft = Math.max(0, Math.ceil((testDay1 - today) / msPerDay));
+
+  root.appendChild(el('div', { class: 'section-label' }, '🌸 がんばりスタンプ帳', el('div', { class: 'deco' })));
+
+  // カウントダウン
+  const cdMsg = daysLeft > 0
+    ? '中間テストまで あと ' + daysLeft + '日'
+    : daysLeft === 0
+      ? '今日からテスト本番！'
+      : 'テスト期間中・お疲れさま✨';
+  root.appendChild(el('div', { class: 'countdown-banner' },
+    el('span', { class: 'cd-icon' }, '📅'),
+    el('span', { class: 'cd-text' }, cdMsg)
+  ));
+
+  const stampCard = el('div', { class: 'stamp-card' });
+  const stampGrid = el('div', { class: 'stamp-grid' });
+
+  // 各日のセルを生成
+  const cur = new Date(stampStart);
+  const newlyPressed = []; // アニメ対象（今日でスタンプがある日）
+  while (cur <= stampEnd) {
+    const key = formatDateKey(cur);
     const dayHist = history.filter(h => h.date === key);
     const total = dayHist.reduce((s, h) => s + h.total, 0);
-    let level = 0;
-    if (total > 30) level = 3;
-    else if (total > 10) level = 2;
-    else if (total > 0) level = 1;
-    const isToday = i === 0;
-    const dom = d.getDate();
-    const hasData = total > 0;
-    const cell = el('button', {
-      class: 'heat-cell heat-' + level + (isToday ? ' is-today' : '') + (hasData ? ' clickable' : ''),
-      title: key + ' / ' + total + '問' + (hasData ? '（タップで詳細）' : '（学習なし）'),
-      type: 'button',
-      onclick: hasData ? () => jumpToDailyDetail(key) : () => showToast('この日はまだ学習記録がありません')
-    },
-      el('div', { class: 'heat-day' }, String(dom))
-    );
-    stripRow.appendChild(cell);
+    const isToday = formatDateKey(today) === key;
+    const isPast = cur < today && !isToday;
+    const isFuture = cur > today;
+    const testInfo = TEST_DATES[key];
+    const month = cur.getMonth() + 1;
+    const day = cur.getDate();
+    const dowLabel = ['日', '月', '火', '水', '木', '金', '土'][cur.getDay()];
+
+    // スタンプ種類（学習量で変える）
+    let stampEmoji = '';
+    let stampClass = 'empty';
+    if (total >= 31) { stampEmoji = '🏆'; stampClass = 'gold'; }
+    else if (total >= 11) { stampEmoji = '⭐'; stampClass = 'silver'; }
+    else if (total >= 1) { stampEmoji = '🌸'; stampClass = 'pink'; }
+
+    let cellClass = 'stamp-cell';
+    if (isToday) cellClass += ' is-today';
+    if (testInfo) cellClass += ' is-test';
+    if (stampClass !== 'empty') cellClass += ' has-stamp ' + stampClass;
+    if (isPast && stampClass === 'empty') cellClass += ' missed';
+    if (isFuture) cellClass += ' future';
+
+    const cellChildren = [
+      el('div', { class: 'stamp-date' },
+        el('span', { class: 'stamp-day' }, String(day)),
+        el('span', { class: 'stamp-dow' }, dowLabel)
+      )
+    ];
+
+    if (testInfo) {
+      // テスト日
+      cellChildren.push(el('div', { class: 'test-mark' }, '📝'));
+      cellChildren.push(el('div', { class: 'test-subjects' }, testInfo.join('・')));
+    } else if (stampEmoji) {
+      // スタンプ済み
+      const stampInner = el('div', {
+        class: 'stamp-mark' + (isToday ? ' just-pressed' : ''),
+        'data-emoji': stampEmoji
+      }, stampEmoji);
+      cellChildren.push(stampInner);
+      cellChildren.push(el('div', { class: 'stamp-count' }, total + '問'));
+    } else if (isFuture) {
+      cellChildren.push(el('div', { class: 'stamp-mark-empty' }, '・'));
+    } else {
+      cellChildren.push(el('div', { class: 'stamp-mark-empty' }, ''));
+    }
+
+    const cell = el(stampClass !== 'empty' ? 'button' : 'div', {
+      class: cellClass,
+      type: stampClass !== 'empty' ? 'button' : undefined,
+      onclick: stampClass !== 'empty' ? () => jumpToDailyDetail(key) : (testInfo ? () => showToast('📝 ' + month + '/' + day + ' のテスト：' + testInfo.join('・')) : null)
+    }, ...cellChildren);
+
+    stampGrid.appendChild(cell);
+
+    cur.setDate(cur.getDate() + 1);
   }
-  stripCard.appendChild(stripRow);
-  stripCard.appendChild(el('div', { class: 'heat-legend' },
-    el('span', null, '少'),
-    el('span', { class: 'heat-cell heat-0 mini' }),
-    el('span', { class: 'heat-cell heat-1 mini' }),
-    el('span', { class: 'heat-cell heat-2 mini' }),
-    el('span', { class: 'heat-cell heat-3 mini' }),
-    el('span', null, '多')
+
+  stampCard.appendChild(stampGrid);
+
+  // 凡例
+  stampCard.appendChild(el('div', { class: 'stamp-legend' },
+    el('span', { class: 'legend-item' }, el('span', { class: 'legend-emoji' }, '🌸'), '1〜10問'),
+    el('span', { class: 'legend-item' }, el('span', { class: 'legend-emoji' }, '⭐'), '11〜30問'),
+    el('span', { class: 'legend-item' }, el('span', { class: 'legend-emoji' }, '🏆'), '31問〜'),
+    el('span', { class: 'legend-item' }, el('span', { class: 'legend-emoji' }, '📝'), 'テスト日')
   ));
-  root.appendChild(stripCard);
+
+  root.appendChild(stampCard);
 
   // ===== 2. 日別の学習履歴 =====
   root.appendChild(el('div', { class: 'section-label' }, '📅 日別の学習履歴', el('div', { class: 'deco' })));

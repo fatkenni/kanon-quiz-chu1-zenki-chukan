@@ -1,6 +1,6 @@
 // 果音ドリル Service Worker
 // オフラインでも動くようにキャッシュを管理
-const CACHE_VERSION = 'kanon-quiz-v19';
+const CACHE_VERSION = 'kanon-quiz-v20';
 const ASSETS = [
   './',
   './index.html',
